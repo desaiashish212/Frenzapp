@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.rishi.frendzapp.App;
+import com.rishi.frendzapp.core.lock.LockManager;
+import com.rishi.frendzapp.ui.main.MainActivity;
 
 public abstract class BaseFragment extends Fragment {
 

@@ -50,7 +50,6 @@ public class HomeFragment extends BaseFragment {
 
         initUI(view);
         initListeners();
-        LockManager.getInstance().getAppLock().addIgnoredActivity(MainActivity.class);
 
         return view;
     }

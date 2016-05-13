@@ -165,7 +165,6 @@ public class MainActivity extends BaseLogeableActivity implements NavigationDraw
         loadFriendsList();
 
         initVideoChat();
-        LockManager.getInstance().getAppLock().removeIgnoredActivity(MainActivity.class);
     }
 
     @Override

@@ -98,7 +98,7 @@ public class PrivateDialogActivity extends BaseDialogActivity implements Receive
            String filepath = (String) getIntent().getExtras().getSerializable("path");
             shareImage(filepath);
         }
-        LockManager.getInstance().getAppLock().addIgnoredActivity(MainActivity.class);
+
     }
 
     @Override
