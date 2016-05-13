@@ -1,0 +1,44 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/menu_item_background_default_selector">
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/account_key"
+        android:id="@+id/menu_imageView"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp"
+         />
+
+    <TextView
+        android:id="@+id/name_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textColor="@drawable/menu_item_text_selector"
+        android:textSize="@dimen/text_size_small"
+        android:layout_alignTop="@+id/counter_textview"
+        android:layout_toRightOf="@+id/menu_imageView"
+        android:layout_toEndOf="@+id/menu_imageView" />
+
+    <TextView
+        android:id="@+id/counter_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerInParent="true"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/badge_unread_messages_counter"
+        android:paddingBottom="1dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="1dp"
+        android:text="0"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_size_small"
+        android:visibility="gone" />
+
+</RelativeLayout>

@@ -1,0 +1,21 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_search"
+        android:actionViewClass="android.widget.SearchView"
+        android:icon="@drawable/ic_action_search"
+        android:showAsAction="always|collapseActionView"
+
+        android:title="@string/acb_search_title"/>
+    <item
+        android:id="@+id/action_add_contact"
+        android:actionViewClass="android.widget.SearchView"
+        android:icon="@drawable/contact_add"
+        android:showAsAction="always|collapseActionView"
+
+        android:title="@string/acb_search_title"/>
+    <item
+        android:id="@+id/action_refresh"
+        android:icon="@drawable/refresh"
+        android:showAsAction="ifRoom"
+        android:title="Refresh" />
+</menu>

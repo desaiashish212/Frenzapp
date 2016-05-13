@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/about_back_imgae">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="CHAT SETTING"
+            android:padding="8dp"
+            android:textColor="#898989"
+
+            android:textSize="14sp"
+            android:id="@+id/txt_chatSetting"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+
+            android:background="#898989"></View>
+
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/Relative_enter_is_Send"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/Linear_one">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Enter is send"
+                android:paddingLeft="8dp"
+                android:paddingTop="10dp"
+                android:textColor="#000000"
+
+                android:textSize="18sp"
+                android:id="@+id/textView"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
+
+
+
+
+
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="#898989"></View>
+
+
+
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/chk_enter_is_send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"/>
+
+    </RelativeLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/Linear_auto_download"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+
+            android:text="Media auto-download"
+            android:paddingLeft="8dp"
+            android:textColor="#000000"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="1dp"
+            android:textSize="18sp"
+            android:id="@+id/txt_mediaAutoDownload_"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="#898989">
+
+        </View>
+
+
+    </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

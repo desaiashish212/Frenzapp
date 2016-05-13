@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:background="@color/white"
+    android:focusable="false"
+    android:clickable="true"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <include
+        android:id="@+id/header"
+        android:layout_width="fill_parent"
+        android:layout_height="180dip"
+        layout="@layout/card_view_profile" />
+    <ListView
+        android:id="@+id/navigation_listview"
+        android:background="@null"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1.0dip"
+        android:choiceMode="singleChoice"
+        android:layout_below="@+id/header" />
+</RelativeLayout>

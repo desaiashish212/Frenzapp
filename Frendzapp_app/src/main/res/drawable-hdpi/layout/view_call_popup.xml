@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/popup_element"
+    android:padding="10dp"
+    android:background="@color/black">
+    <LinearLayout
+        android:id="@+id/linearLayout_voice_call"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+        <TextView
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Voice Call"
+            android:textSize="20dp"
+            android:textColor="@color/white"/>
+        <LinearLayout
+            android:layout_marginLeft="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="@dimen/divider_width"
+                android:layout_height="fill_parent"
+                android:background="@android:color/darker_gray" />
+
+            <ImageView
+                android:id="@+id/btn_voice_call"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_general_selector"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:src="@drawable/ic_friends_call" />
+            </LinearLayout>
+        <include android:id="@+id/actions_friend_linearlayout" layout="@layout/view_friends_actions" />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_height"
+        android:background="@android:color/darker_gray"
+        />
+    <LinearLayout
+        android:id="@+id/linearLayout_video_call"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+
+        android:padding="10dp">
+        <TextView
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Video Call"
+            android:textSize="20dp"
+            android:textColor="@color/white"/>
+        <LinearLayout
+            android:layout_marginLeft="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="@dimen/divider_width"
+                android:layout_height="match_parent"
+                android:background="@android:color/darker_gray" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_general_selector"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:src="@drawable/ic_friends_video" />
+        </LinearLayout>
+        <include android:id="@+id/actions_friend_linearlayout" layout="@layout/view_friends_actions" />
+    </LinearLayout>
+</LinearLayout>

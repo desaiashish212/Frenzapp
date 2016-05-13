@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" 
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/Linear_one"
+    android:background="@drawable/about_back_imgae">
+    
+   <ImageView
+       android:id="@+id/profile_pic"
+       android:layout_width="200dp"
+       android:layout_height="200dp"
+       android:scaleType="fitXY"
+       android:src="@drawable/mainlogo"
+       android:layout_marginTop="50dp"
+       android:layout_gravity="center_horizontal"/>
+
+    <LinearLayout
+        android:id="@+id/Linear_two"
+        android:layout_marginTop="20dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="#ffffff">
+        <TextView
+            android:padding="15dp"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:textColor="#000000"
+            android:text="Your Service is attached to the phone number listed below.You can freely switch your mobile device,reinstall or upgrade the software as long as your service phone number stay the same.We hope you enjoy our service."/>
+
+
+
+
+
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/Linear_three"
+        android:layout_marginTop="20dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="#ffffff">
+        <TextView
+            android:id="@+id/txt_phone_number1"
+            android:padding="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="#000000"
+            android:text="Phone number"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="+919652314789"
+            android:padding="30dp"
+            android:textColor="#000000"/>
+
+
+
+
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

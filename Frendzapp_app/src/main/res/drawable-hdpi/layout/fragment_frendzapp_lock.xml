@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/about_back_imagae"
+    android:orientation="vertical">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp">
+    <Button
+        android:id="@+id/bt_on_off"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_general_selector"
+        android:paddingBottom="14dp"
+        android:paddingTop="14dp"
+        android:gravity="left"
+        android:textSize="@dimen/text_size" />
+
+    <include layout="@layout/view_separator_gray" />
+
+    <Button
+        android:id="@+id/bt_change"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_general_selector"
+        android:gravity="left"
+        android:paddingBottom="14dp"
+        android:paddingTop="14dp"
+        android:text="Change Password"
+        android:textSize="@dimen/text_size" />
+
+    <include layout="@layout/view_separator_gray" />
+</LinearLayout>
+</LinearLayout>

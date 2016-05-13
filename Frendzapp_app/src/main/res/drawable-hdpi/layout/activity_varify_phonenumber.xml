@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent" android:layout_width="match_parent"
+    android:background="@drawable/bg5">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#60000000">
+<ScrollView android:orientation="vertical"  android:layout_width="fill_parent" android:layout_height="fill_parent">
+    <LinearLayout android:orientation="vertical" android:padding="32.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <TextView android:textSize="14.0dip" android:textColor="@color/white" android:gravity="center" android:background="@drawable/ractagle_pink_dark_tlr" android:layout_width="fill_parent" android:layout_height="40.0dip" android:text="Varify your phone number" />
+        <LinearLayout android:orientation="vertical" android:background="@drawable/ractagle_white_blr" android:padding="16.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <TextView android:textSize="12.0dip" android:textStyle="normal" android:textColor="@color/white" android:gravity="center" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Frendzzapp Messenger will send a one time SMS message to verify you phone number. Carrier SMS changes may apply." android:lineSpacingMultiplier="1.2" />
+            <TextView android:textSize="12.0dip" android:textStyle="normal" android:textColor="@color/white" android:gravity="center" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="24.0dip" android:text="Please confirm your country code and enter your phone number." android:lineSpacingMultiplier="1.2" />
+            <Spinner android:popupBackground="@color/opacity" android:id="@+id/sp_country" android:layout_width="fill_parent" android:layout_height="40.0dip" android:layout_margin="16.0dip" />
+            <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_margin="16.0dip">
+                <Spinner android:popupBackground="@color/opacity" android:id="@+id/sp_code" android:layout_width="60.0dip" android:layout_height="40.0dip" />
+                <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                    <EditText android:id="@+id/mob_number" android:maxLength="10" android:textSize="16.0dip" android:textStyle="normal" android:textColor="@color/white" android:gravity="center" android:background="@color/transpernt" android:layout_width="fill_parent" android:layout_height="36.0dip" android:hint="Phone Number" android:singleLine="true" android:inputType="number" />
+                    <View android:background="@color/gray" android:layout_width="fill_parent" android:layout_height="0.30000007dip" />
+                </LinearLayout>
+            </LinearLayout>
+            <TextView android:textSize="16.0dip" android:textStyle="bold" android:textColor="@color/white" android:gravity="center" android:layout_gravity="center" android:id="@+id/txt_submit" android:background="@drawable/ractagle_pink_light" android:paddingLeft="48.0dip" android:paddingRight="48.0dip" android:layout_width="fill_parent" android:layout_height="40.0dip" android:layout_margin="16.0dip" android:text="Submit" />
+        </LinearLayout>
+    </LinearLayout>
+    </ScrollView>
+    </LinearLayout>
+</LinearLayout>

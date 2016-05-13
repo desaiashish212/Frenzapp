@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@id/avatarImageView"
+                        android:layout_width="fill_parent"
+                        android:layout_height="360dp"
+                        android:src="@drawable/placeholder_user"
+                        android:scaleType="fitXY"
+                        android:adjustViewBounds="true" />
+                    <LinearLayout android:orientation="vertical" android:id="@id/linearLayout_name" android:background="@color/opacity" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_alignParentBottom="true">
+                        <RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+                            <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                                <TextView android:textSize="18.0sp" android:textStyle="bold" android:textColor="@color/white" android:id="@+id/txt_name" android:padding="5.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" />
+                                <TextView android:textSize="18.0sp" android:textStyle="bold" android:textColor="@color/white" android:id="@+id/txt_number" android:padding="5.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" />
+                            </LinearLayout>
+                            <LinearLayout android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentRight="true" android:layout_centerVertical="true">
+                                <ImageView android:layout_gravity="center" android:id="@id/online_imageview" android:layout_width="15.0dip" android:layout_height="15.0dip" android:layout_marginRight="3.0dip" android:src="@drawable/badge_online" />
+                                <TextView android:textSize="@dimen/text_size" android:textColor="@color/white" android:layout_gravity="center" android:id="@id/online_status_textview" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                            </LinearLayout>
+                        </RelativeLayout>
+                    </LinearLayout>
+                </RelativeLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="vertical" android:id="@+id/linearLayout_status" android:background="@drawable/button_background" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" android:layout_marginTop="20.0dip" android:layout_marginRight="5.0dip">
+                <RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+                    <TextView android:textSize="18.0sp" android:textStyle="bold" android:textColor="@color/black" android:padding="10.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Status" />
+                </RelativeLayout>
+                <View android:background="@android:color/darker_gray" android:layout_width="fill_parent" android:layout_height="1.0dip" />
+                <TextView android:textSize="18.0sp" android:textColor="@color/black" android:id="@+id/txt_status" android:padding="10.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout android:orientation="vertical"
+                android:id="@+id/linearLayout_audio_status" android:background="@drawable/button_background" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" android:layout_marginTop="20.0dip" android:layout_marginRight="5.0dip">
+                <RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+                    <TextView android:textSize="20.0sp" android:textStyle="bold" android:textColor="@color/black" android:padding="10.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Voice Status" />
+                </RelativeLayout>
+                <View android:background="@android:color/darker_gray" android:layout_width="fill_parent" android:layout_height="1.0dip" />
+                <ImageButton
+                    android:id="@+id/ButtonTestPlayPause"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/EditTextSongURL"
+                    android:layout_centerHorizontal="true"
+                    android:contentDescription="TestPlayPause"
+                    android:onClick="onClick"
+                    android:src="@drawable/button_play" />
+
+                <SeekBar
+                    android:id="@+id/SeekBarTestPlay"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/ButtonTestPlayPause" />
+            </LinearLayout>
+
+
+
+            <LinearLayout
+
+                android:orientation="vertical" android:id="@+id/linearLayout_dob" android:background="@drawable/button_background" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" android:layout_marginTop="20.0dip" android:layout_marginRight="5.0dip">
+                <RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+                    <TextView android:textSize="18.0sp" android:textStyle="bold" android:textColor="@color/black" android:padding="10.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Birthdate" />
+                </RelativeLayout>
+                <View android:background="@android:color/darker_gray" android:layout_width="fill_parent" android:layout_height="1.0dip" />
+                <TextView android:textSize="18.0sp" android:textColor="@color/black" android:id="@+id/txt_dob" android:padding="10.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout android:orientation="vertical" android:id="@+id/linearLayout_email" android:background="@drawable/button_background" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" android:layout_marginTop="20.0dip" android:layout_marginRight="5.0dip">
+                <RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+                    <TextView android:textSize="18.0sp" android:textStyle="bold" android:textColor="@color/black" android:padding="10.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Email" />
+                </RelativeLayout>
+                <View android:background="@android:color/darker_gray" android:layout_width="fill_parent" android:layout_height="1.0dip" />
+                <TextView android:textSize="18.0sp" android:textColor="@color/black" android:id="@+id/txt_email" android:padding="10.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginTop="10.0dip" android:layout_marginRight="10.0dip">
+                <include layout="@layout/view_separator_gray" />
+                <RelativeLayout android:id="@id/video_call_button" android:background="@drawable/button_general_selector" android:paddingTop="10.0dip" android:paddingBottom="10.0dip" android:clickable="true" android:layout_width="fill_parent" android:layout_height="wrap_content" android:onClick="videoCallClickListener">
+                    <TextView android:textSize="@dimen/text_size" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/frd_video_call" android:layout_alignParentLeft="true" android:layout_centerVertical="true" />
+                    <LinearLayout android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentRight="true" android:layout_centerVertical="true">
+                        <View android:background="@android:color/darker_gray" android:layout_width="@dimen/divider_width" android:layout_height="fill_parent" />
+                        <ImageView android:background="@drawable/button_general_selector" android:paddingLeft="5.0dip" android:paddingRight="5.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/ic_friends_video" />
+                    </LinearLayout>
+                </RelativeLayout>
+                <include layout="@layout/view_separator_gray" />
+                <RelativeLayout android:id="@id/voice_call_button" android:background="@drawable/button_general_selector" android:paddingTop="10.0dip" android:paddingBottom="10.0dip" android:clickable="true" android:layout_width="fill_parent" android:layout_height="wrap_content" android:onClick="voiceCallClickListener">
+                    <TextView android:textSize="@dimen/text_size" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/frd_audio_call" android:layout_alignParentLeft="true" android:layout_centerVertical="true" />
+                    <LinearLayout android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentRight="true" android:layout_centerVertical="true">
+                        <View android:background="@android:color/darker_gray" android:layout_width="@dimen/divider_width" android:layout_height="fill_parent" />
+                        <ImageView android:layout_gravity="center" android:background="@drawable/button_general_selector" android:paddingLeft="5.0dip" android:paddingRight="5.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/ic_friends_call" />
+                    </LinearLayout>
+                </RelativeLayout>
+                <include layout="@layout/view_separator_gray" />
+                <RelativeLayout android:id="@id/chat_button" android:background="@drawable/button_general_selector" android:paddingTop="10.0dip" android:paddingBottom="10.0dip" android:clickable="true" android:layout_width="fill_parent" android:layout_height="wrap_content" android:onClick="chatClickListener">
+                    <TextView android:textSize="@dimen/text_size" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/frd_chat" android:layout_alignParentLeft="true" android:layout_centerVertical="true" />
+                    <LinearLayout android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentRight="true" android:layout_centerVertical="true">
+                        <View android:background="@android:color/darker_gray" android:layout_width="@dimen/divider_width" android:layout_height="fill_parent" />
+                        <ImageView android:background="@null" android:paddingLeft="5.0dip" android:paddingRight="5.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/ic_friends_chat" />
+                    </LinearLayout>
+                </RelativeLayout>
+                <include layout="@layout/view_separator_gray" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

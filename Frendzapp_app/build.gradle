@@ -1,0 +1,61 @@
+ buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
+apply plugin: 'android'
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
+dependencies {
+    compile fileTree(dir: "$buildDir/native-libs", include: 'native-libs.jar')
+  //  compile files('libs/native-libs.jar')
+    compile fileTree(dir: 'libs', include: '*.jar')
+    compile project(':Frendzapp_core')
+    compile project(':cropper')
+    compile project(':stickyListHeaders')
+    compile "com.nostra13.universalimageloader:universal-image-loader:${rootProject.universalImageLoaderVersion}"
+    compile "com.google.android.gms:play-services:${rootProject.googlePlayServicesVersion}"
+    compile('de.keyboardsurfer.android.widget:crouton:1.8.4@aar') {
+        exclude group: 'com.google.android', module: 'support-v4'
+    }
+    compile "com.nineoldandroids:library:${rootProject.nineoldandroidsVersion}"
+    compile 'com.github.chrisbanes.actionbarpulltorefresh:library:+'
+    compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
+        transitive = true;
+    }
+    compile 'org.jbundle.util.osgi.wrapped:org.jbundle.util.osgi.wrapped.org.apache.http.client:4.1.2'
+    compile 'com.mcxiaoke.volley:library-aar:1.0.0'
+    compile 'com.android.support:design:23.0.1'
+
+}
+
+android {
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
+    defaultConfig {
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+        versionCode rootProject.versionCode
+        versionName rootProject.versionName
+    }
+    buildTypes {
+        release {
+            debuggable rootProject.prodDebug
+            signingConfig signingConfigs.debug
+            minifyEnabled false
+            proguardFile 'proguard.cfg'
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+}

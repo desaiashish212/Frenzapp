@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/transpernt">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/action_bar_height"
+        android:layout_marginTop="25dp"/>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/black">
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="10dp">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
+                <ImageView
+                    android:id="@+id/iv_gallery"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/gallery1"
+                    android:background="@color/transpernt"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_gallery"
+                    android:textSize="15sp"
+                    android:textColor="@color/white"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5dp"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="@dimen/divider_width"
+                android:layout_height="match_parent"
+                android:background="@android:color/darker_gray"
+                android:layout_marginRight="30dp"
+                android:layout_marginLeft="30dp"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
+                <ImageView
+                    android:id="@+id/iv_video"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/vedio"
+                    android:background="@color/transpernt"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_video"
+                    android:textSize="15sp"
+                    android:textColor="@color/white"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5dp"/>
+
+            </LinearLayout>
+            <View
+                android:layout_width="@dimen/divider_width"
+                android:layout_height="match_parent"
+                android:background="@android:color/darker_gray"
+                android:layout_marginRight="30dp"
+                android:layout_marginLeft="30dp"/>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
+                <ImageView
+                    android:id="@+id/iv_audio"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/audio"
+                    android:background="@color/transpernt"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_audio"
+                    android:textSize="15sp"
+                    android:textColor="@color/white"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5dp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_height"
+            android:background="@android:color/darker_gray"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
+                <ImageView
+                    android:id="@+id/iv_file"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/file"
+                    android:background="@color/transpernt"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_file"
+                    android:textSize="15sp"
+                    android:textColor="@color/white"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5dp"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="@dimen/divider_width"
+                android:layout_height="match_parent"
+                android:background="@android:color/darker_gray"
+                android:layout_marginRight="30dp"
+                android:layout_marginLeft="30dp"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
+                <ImageView
+                    android:id="@+id/iv_location"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/location"
+                    android:background="@color/transpernt"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_location"
+                    android:textSize="15sp"
+                    android:textColor="@color/white"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5dp"/>
+
+            </LinearLayout>
+            <View
+                android:layout_width="@dimen/divider_width"
+                android:layout_height="match_parent"
+                android:background="@android:color/darker_gray"
+                android:layout_marginRight="30dp"
+                android:layout_marginLeft="30dp"/>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
+                <ImageView
+                    android:id="@+id/iv_contact"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/contact"
+                    android:background="@color/transpernt"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_contact"
+                    android:textSize="15sp"
+                    android:textColor="@color/white"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5dp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

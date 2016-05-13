@@ -1,0 +1,4 @@
+include ':Frendzapp_app', ':stickyListHeaders'
+include ':Frendzapp_core'
+include ':cropper'
+include ':stickyListHeaders'

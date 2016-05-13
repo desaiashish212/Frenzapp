@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/avatar_imageview"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:src="@drawable/placeholder_group"
+        android:scaleType="fitXY"/>
+    <LinearLayout
+        android:id="@+id/linearLayout_title"
+        android:layout_width="160dp"
+        android:layout_height="50dp"
+        android:background="@color/opacity"
+        android:layout_alignBottom="@+id/avatar_imageview"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/name_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size"
+            android:textColor="@color/white"
+            android:maxLines="2"
+            android:text="Frendzpp"
+            android:ellipsize="end"
+
+            android:gravity=""/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/unread_messages_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/badge_unread_messages_counter"
+        android:paddingBottom="1dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="1dp"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_size"
+        android:layout_alignRight="@+id/avatarImageView"
+        android:layout_marginTop="100dp"/>
+
+</RelativeLayout>
