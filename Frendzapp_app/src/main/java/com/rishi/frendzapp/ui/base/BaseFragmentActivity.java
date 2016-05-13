@@ -29,7 +29,7 @@ import com.rishi.frendzapp_core.utils.ErrorUtils;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class BaseFragmentActivity extends FragmentActivity implements QBLogeable, ActivityHelper.ServiceConnectionListener, ConnectivityListener {
+public class BaseFragmentActivity extends BaseLockFragmentActivty implements QBLogeable, ActivityHelper.ServiceConnectionListener, ConnectivityListener {
 
     public static final int DOUBLE_BACK_DELAY = 2000;
 
