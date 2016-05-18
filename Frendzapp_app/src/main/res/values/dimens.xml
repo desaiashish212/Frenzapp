@@ -121,4 +121,6 @@
     <dimen name="layout_height_100dp">100dp</dimen>
     <dimen name="layout_height_150dp">150dp</dimen>
     <dimen name="layout_height_200dp">200dp</dimen>
+
+    <dimen name="padding_medium">8dp</dimen>
 </resources>

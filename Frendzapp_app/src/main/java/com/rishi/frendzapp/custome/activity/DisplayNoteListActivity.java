@@ -74,7 +74,7 @@ public class DisplayNoteListActivity extends BaseActivity{
     private void getNoteList() {
         final ProgressDialog progressDialog = DialogUtils.getProgressDialog(this);
         QBRequestGetBuilder requestBuilder = new QBRequestGetBuilder();
-        requestBuilder.eq("City", "kolhapur");
+      //  requestBuilder.eq("City", "Kolhapur");
         requestBuilder.eq("Category", category);
         requestBuilder.setPagesLimit(5);
         //requestBuilder.eq("Shop_name", "frendzapp");

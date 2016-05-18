@@ -101,6 +101,8 @@ public class OfferDataHolder {
 
     public String getOfferCategory(int position){return offerList.get(position).getCaregory();}
 
+    public String getOffersViews(int position){return  offerList.get(position).getViews();}
+
     public void clear() {
         offerList.clear();
     }
@@ -113,6 +115,21 @@ public class OfferDataHolder {
     }
 
     public void addOfferToList(QBCustomObject customObject) {
+        if (offerList == null) {
+            offerList = new ArrayList<Offer>();
+        }
+        offerList.add(new Offer(customObject));
+    }
+    public List<String> getNoteComments(int position) {
+        return offerList.get(position).getCommentsList();
+    }
+    public void addNewComment(int notePosition, String comment) {
+        offerList.get(notePosition).addNewComment(comment);
+    }
+    public String getComments(int notePosition) {
+        return offerList.get(notePosition).getComments();
+    }
+    public void addNoteToList(QBCustomObject customObject) {
         if (offerList == null) {
             offerList = new ArrayList<Offer>();
         }

@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.rishi.frendzapp.ui.applock.AppLockActivity;
 import com.rishi.frendzapp.ui.base.BaseActivity;
+import com.rishi.frendzapp_core.utils.PrefsHelper;
 
 public class AppLockImpl extends AppLock implements PageListener {
 	public static final String TAG = "DefaultAppLock";
@@ -42,7 +43,7 @@ public class AppLockImpl extends AppLock implements PageListener {
 
 	public boolean checkPasscode(String passcode) {
 		passcode = PASSWORD_SALT + passcode + PASSWORD_SALT;
-		passcode = Encryptor.getSHA1(passcode);
+		//passcode = Encryptor.getSHA1(passcode);
 		String storedPasscode = "";
 		System.out.println("Password:"+settings.getString(PASSWORD_PREFERENCE_KEY, ""));
 		if (settings.contains(PASSWORD_PREFERENCE_KEY)) {
@@ -64,8 +65,10 @@ public class AppLockImpl extends AppLock implements PageListener {
 			editor.commit();
 			this.disable();
 		} else {
+			PrefsHelper.getPrefsHelper().savePref(PrefsHelper.PREF_APPLOCK_PASS,passcode);
 			passcode = PASSWORD_SALT + passcode + PASSWORD_SALT;
-			passcode = Encryptor.getSHA1(passcode);
+			//passcode = Encryptor.getSHA1(passcode);
+
 			editor.putString(PASSWORD_PREFERENCE_KEY, passcode);
 			editor.commit();
 			this.enable();

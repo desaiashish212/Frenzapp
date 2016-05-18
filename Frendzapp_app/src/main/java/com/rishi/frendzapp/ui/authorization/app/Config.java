@@ -7,6 +7,7 @@ public class Config {
     public static final String URL_REQUEST_SMS = "http://www.frendzapp.com/services/request_sms.php";
     public static final String URL_VERIFY_OTP = "http://www.frendzapp.com/services/verify_otp.php";
     public static final String URL_INVITE_FRIENDS = "http://www.frendzapp.com/services/invite_friends.php";
+    public static final String URL_FORGOT_PASS = "http://www.frendzapp.com/services/forgetPass.php";
 
     public static final String SMS_ORIGIN = "FRENDZ";
     // special character to prefix the otp. Make sure this character appears only once in the sms

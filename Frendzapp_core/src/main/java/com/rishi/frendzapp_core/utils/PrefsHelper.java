@@ -46,6 +46,8 @@ public class PrefsHelper {
     public static final String PREF_NOTIFICATION_NAME = "notification_name";
     public static final String PREF_NOTIFICATION_VIBRATE = "notification_vibrate";
 
+    public static final String PREF_APPLOCK_PASS = "app_lock_pass";
+
     private final SharedPreferences sharedPreferences;
     private final SharedPreferences.Editor editor;
 

@@ -847,10 +847,10 @@ public abstract class BaseDialogActivity extends BaseFragmentActivity implements
             public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
                 super.onTextChanged(charSequence, start, before, count);
                 setSendButtonVisibility(charSequence);
-                if(PrefsHelper.getPrefsHelper().getPref(PrefsHelper.PREF_IS_SEND_CHACKED)){
-                    messageEditText.setImeOptions(EditorInfo.IME_ACTION_SEND);
-                    System.out.println("IME_ACTION_SEND....................................");
-                }
+//                if(PrefsHelper.getPrefsHelper().getPref(PrefsHelper.PREF_IS_SEND_CHACKED)){
+//                    messageEditText.setImeOptions(EditorInfo.IME_ACTION_SEND);
+//                    System.out.println("IME_ACTION_SEND....................................");
+//                }
 
                 // TODO: now it is possible only for Private chats
                 if (QBDialogType.PRIVATE.equals(dialog.getType())) {
@@ -918,9 +918,9 @@ public abstract class BaseDialogActivity extends BaseFragmentActivity implements
         if (heightDifference > EXPECTED_HEIGHT) {
             keyboardHeight = heightDifference;
         }
-        if(PrefsHelper.getPrefsHelper().getPref(PrefsHelper.PREF_IS_SEND_CHACKED)){
-            messageEditText.setImeOptions(EditorInfo.IME_ACTION_SEND);
-        }
+//        if(PrefsHelper.getPrefsHelper().getPref(PrefsHelper.PREF_IS_SEND_CHACKED)){
+//            messageEditText.setImeOptions(EditorInfo.IME_ACTION_SEND);
+//        }
     }
 
     private void setSmilePanelIcon(int resourceId) {

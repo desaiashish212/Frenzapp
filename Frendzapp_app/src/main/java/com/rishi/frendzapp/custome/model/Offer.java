@@ -30,7 +30,9 @@ public class Offer {
     private String product_image4;
     private String product_image5;
     private String category;
+    private String views;
     private List<String> product_image;
+    private List<String> commentsList;
    // private String[] product_image;
 
 
@@ -53,7 +55,16 @@ public class Offer {
         product_image3 = parseField("product_image3", customObject);
         product_image4 = parseField("product_image4", customObject);
         product_image5 = parseField("product_image5", customObject);
+        //
+
+        commentsList = new ArrayList<String>();
+        String commentString = parseField("comments",customObject);
+        if (commentString != null) {
+            String[] comments = commentString.split("/");
+            Collections.addAll(this.commentsList, comments);
+        }
         category = parseField("Category", customObject);
+        views=parseField("Views",customObject);
 
         //product_image = new ArrayList<String>();
        // product_image = new String[];
@@ -162,4 +173,25 @@ public class Offer {
     public String getCaregory() {
         return category;
     }
+
+    public String getViews(){return views;}
+
+
+    public List<String> getCommentsList() {
+        return commentsList;
+    }
+
+    public String getComments() {
+        String comments = "";
+        for (String comment : commentsList) {
+            comments += comment + "/";
+        }
+        return comments;
+    }
+
+    public void addNewComment(String comment) {
+        commentsList.add(comment);
+    }
+
+
 }

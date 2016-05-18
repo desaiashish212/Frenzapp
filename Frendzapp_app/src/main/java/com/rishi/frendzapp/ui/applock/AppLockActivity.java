@@ -1,13 +1,18 @@
 package com.rishi.frendzapp.ui.applock;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.method.PasswordTransformationMethod;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,34 +21,62 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.google.android.gms.maps.model.l;
+import com.rishi.frendzapp.App;
 import com.rishi.frendzapp.R;
 import com.rishi.frendzapp.core.lock.AppLock;
 import com.rishi.frendzapp.core.lock.LockManager;
+import com.rishi.frendzapp.ui.authorization.app.Config;
+import com.rishi.frendzapp.ui.authorization.intializing.IntializingActivity;
 import com.rishi.frendzapp.ui.base.BaseActivity;
+import com.rishi.frendzapp.ui.verification.OtpVerificationActivity;
+import com.rishi.frendzapp_core.models.AppSession;
+import com.rishi.frendzapp_core.utils.PrefsHelper;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class AppLockActivity extends BaseActivity {
 	public static final String TAG = "AppLockActivity";
 
 	private int type = -1;
 	private String oldPasscode = null;
-
+	private PopupWindow pwindo;
+	private EditText et_email;
 	protected EditText codeField1 = null;
 	protected EditText codeField2 = null;
 	protected EditText codeField3 = null;
 	protected EditText codeField4 = null;
 	protected InputFilter[] filters = null;
 	protected TextView tvMessage = null;
+	private LinearLayout linear_forgotpassword;
+	private ProgressBar progressBar;
+	PrefsHelper helper;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_applock);
+		helper = new PrefsHelper(this);
 
 		tvMessage = (TextView) findViewById(R.id.tv_message);
+		linear_forgotpassword = (LinearLayout) findViewById(R.id.linear_forgotpassword);
 
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
@@ -148,7 +181,10 @@ public class AppLockActivity extends BaseActivity {
 		case AppLock.ENABLE_PASSLOCK:
 			if (oldPasscode == null) {
 				tvMessage.setText(R.string.reenter_passcode);
+
 				oldPasscode = passLock;
+
+				System.out.println(oldPasscode);
 			} else {
 				if (passLock.equals(oldPasscode)) {
 					setResult(RESULT_OK);
@@ -289,6 +325,13 @@ public class AppLockActivity extends BaseActivity {
 	protected void onPasscodeError() {
 		Toast toast = Toast.makeText(this, getString(R.string.passcode_wrong),
 				Toast.LENGTH_SHORT);
+		linear_forgotpassword.setVisibility(View.VISIBLE);
+		linear_forgotpassword.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				initiatePopupWindow();
+			}
+		});
 		toast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 30);
 		toast.show();
 
@@ -356,4 +399,150 @@ public class AppLockActivity extends BaseActivity {
 			}
 		}, 200);
 	}
+
+
+	public void initiatePopupWindow() {
+		TextView txtOk,txt_cancel;
+		try {
+// We need to get the instance of the LayoutInflater
+			DisplayMetrics metrics = this.getResources().getDisplayMetrics();
+			int width = metrics.widthPixels;
+			int height = metrics.heightPixels;
+			LayoutInflater inflater = (LayoutInflater) this
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			View layout = inflater.inflate(R.layout.popup_forgot_password, null);
+			pwindo = new PopupWindow(layout, width, height, true);
+			pwindo.showAtLocation(layout, Gravity.CENTER, 0, 0);
+
+			txtOk = (TextView) layout.findViewById(R.id.txt_ok);
+			txt_cancel = (TextView) layout.findViewById(R.id.txt_cancel);
+			et_email=(EditText) layout.findViewById(R.id.et_email);
+			progressBar=(ProgressBar)layout.findViewById(R.id.progressBar);
+
+			txtOk.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					String password;
+
+
+
+					String entered_Email=et_email.getText().toString();
+
+					//get email from shared preferences
+
+					String Db_Email= AppSession.getSession().getUser().getEmail();
+					if(entered_Email.equals(Db_Email))
+					{
+						Toast.makeText(AppLockActivity.this,"Both email are same",Toast.LENGTH_SHORT).show();
+
+						//get password from shared preferences
+						if (helper.isPrefExists(PrefsHelper.PREF_APPLOCK_PASS))
+						{
+							password=helper.getPref(PrefsHelper.PREF_APPLOCK_PASS);
+							progressBar.setVisibility(View.VISIBLE);
+							requestForEmail(Db_Email,password);
+
+
+						}
+
+					}
+					else {
+						Toast.makeText(AppLockActivity.this,"Both email are unequal",Toast.LENGTH_SHORT).show();
+					}
+
+
+
+				}
+			});
+
+
+			txt_cancel.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					pwindo.dismiss();
+
+				}
+			});
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void requestForEmail(final String email,final String password) {
+
+		StringRequest strReq = new StringRequest(Request.Method.POST, Config.URL_FORGOT_PASS, new Response.Listener<String>() {
+
+			@Override
+			public void onResponse(String response) {
+				Log.d(TAG, response.toString());
+
+				try {
+					JSONObject responseObj = new JSONObject(response);
+
+					// Parsing json object response
+					// response will be a json object
+					boolean error = responseObj.getBoolean("error");
+					String message = responseObj.getString("message");
+
+					// checking for error, if not error SMS is initiated
+					// device should receive it shortly
+					if (!error) {
+						// boolean flag saying device is waiting for sms
+
+						Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+						pwindo.dismiss();
+					} else {
+						Toast.makeText(getApplicationContext(),
+								"Error: " + message,
+								Toast.LENGTH_LONG).show();
+						pwindo.dismiss();
+					}
+
+					// hiding the progress bar
+					progressBar.setVisibility(View.GONE);
+
+				} catch (JSONException e) {
+					Toast.makeText(getApplicationContext(),
+							"Error: " + e.getMessage(),
+							Toast.LENGTH_LONG).show();
+
+					progressBar.setVisibility(View.GONE);
+				}
+
+			}
+		}, new Response.ErrorListener() {
+
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				Log.e(TAG, "Error: " + error.getMessage());
+				Toast.makeText(getApplicationContext(),
+						error.getMessage(), Toast.LENGTH_SHORT).show();
+				progressBar.setVisibility(View.GONE);
+			}
+		}) {
+
+			/**
+			 * Passing user parameters to our server
+			 * @return
+			 */
+			@Override
+			protected Map<String, String> getParams() {
+				Map<String, String> params = new HashMap<String, String>();
+				params.put("email", email);
+				params.put("password", password);
+				Log.e(TAG, "Posting params: " + params.toString());
+
+				return params;
+			}
+
+		};
+
+		int socketTimeout = 10000;
+		RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+		strReq.setRetryPolicy(policy);
+		// Adding request to request queue
+		App.getInstance().addToRequestQueue(strReq);
+	}
+
 }

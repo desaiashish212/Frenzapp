@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -17,6 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -46,7 +49,7 @@ public class OfferListAdapter extends BaseAdapter {
     private  Context context;
     private final String POSITION = "position";
     private DisplayImageOptions displayImageOptions;
-
+    NumberFormat formatter = new DecimalFormat("00");
     public OfferListAdapter(Context context) {
         this.layoutInflater = LayoutInflater.from(context);
         this.context=context;
@@ -105,6 +108,8 @@ public class OfferListAdapter extends BaseAdapter {
         applySale(viewHolder.txtSale, position);
         applyDiscount(viewHolder.txtDiscount, position);
         applySave(viewHolder.txtSave, position);
+        applyViews(viewHolder.txtView, position);
+        applyComment(viewHolder.txtComment,position);
         applyCountDownTime(viewHolder.txtday, viewHolder.txtHr, viewHolder.txtMin, viewHolder.txtSec, position);
         final int pos=position;
         convertView.setOnClickListener(new View.OnClickListener() {
@@ -125,7 +130,7 @@ public class OfferListAdapter extends BaseAdapter {
         //img.setImageBitmap(DataHolder.getDataHolder().getNoteCity(position));
         String uid = OfferDataHolder.getOfferDataHolder().getOfferMainImage(position);
         ImageLoader.getInstance().displayImage(
-                BaseService.getServiceEndpointURL() + "/blobs/" +uid+
+                BaseService.getServiceEndpointURL() + "/blobs/" + uid +
                         "?token=" + PrefsHelper.getPrefsHelper().getPref(PrefsHelper.PREF_SESSION_TOKEN),
                 img, displayImageOptions, new SimpleImageLoadingListener() {
                     @Override
@@ -160,6 +165,9 @@ public class OfferListAdapter extends BaseAdapter {
     private void applySale(TextView sale, int position) {
         sale.setText(OfferDataHolder.getOfferDataHolder().getOfferSale(position)+"/-");
     }
+    private void applyViews(TextView views, int position) {
+        views.setText(OfferDataHolder.getOfferDataHolder().getOffersViews(position));
+    }
 
     private void applyDiscount(TextView discount, int position) {
         int price = Integer.parseInt(OfferDataHolder.getOfferDataHolder().getOfferPrice(position));
@@ -175,6 +183,26 @@ public class OfferListAdapter extends BaseAdapter {
         save.setText(String.valueOf(result)+"/-");
     }
 
+    private void applyComment(TextView comment,int position) {
+        String commentsStr = "";
+        for (int i = 0; i < OfferDataHolder.getOfferDataHolder().getNoteComments(position).size(); ++i) {
+            commentsStr += "#" + i + "-" + OfferDataHolder.getOfferDataHolder().getNoteComments(position).get(
+                    i) + "\n\n";
+        }
+
+        System.out.println(commentsStr);
+        System.out.println(OfferDataHolder.getOfferDataHolder().getNoteComments(position).size());
+        commentsStr.replace("[", "");
+        commentsStr.replace("]", "");
+        commentsStr = commentsStr.replaceAll("\\[", "").replaceAll("\\]", "");
+        commentsStr = commentsStr.replaceAll("\\#", "");
+        commentsStr= commentsStr.replaceAll("\\-", "");
+        commentsStr= commentsStr.replaceAll("0", "");
+
+        String[] ary = commentsStr.split(",");
+        comment.setText(String.valueOf(ary.length));
+    }
+
     private void applyCountDownTime(final TextView txtday,final TextView txthr,final TextView txtmin,final TextView txtsec, int position) {
 
         long currentDate = Calendar.getInstance().getTime().getTime();
@@ -182,6 +210,7 @@ public class OfferListAdapter extends BaseAdapter {
         long difference = limitDate - currentDate;
 
         CountDownTimer countDownTimer = new CountDownTimer(difference,1000) {
+
             @Override
             public void onTick(long leftTimeInMilliseconds) {
                 long diffSeconds = leftTimeInMilliseconds / 1000 % 60;
@@ -189,10 +218,13 @@ public class OfferListAdapter extends BaseAdapter {
                 long diffHours = leftTimeInMilliseconds / (60 * 60 * 1000) % 24;
                 long diffDays = leftTimeInMilliseconds / (24 * 60 * 60 * 1000);
 
-                txtday.setText(String.valueOf(diffDays));
-                txthr.setText(String.valueOf(diffHours));
-                txtmin.setText(String.valueOf(diffMinutes));
-                txtsec.setText(String.valueOf(diffSeconds));
+
+
+                txtday.setText(String.format("%02d", diffDays));
+                txthr.setText(String.format("%02d", diffHours));
+                txtmin.setText(String.format("%02d", diffMinutes));
+                txtsec.setText(String.format("%02d", diffSeconds));
+
             }
 
             @Override

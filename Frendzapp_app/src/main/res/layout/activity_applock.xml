@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
+
+
+<ScrollView
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:layout_gravity="center"
@@ -227,6 +234,26 @@
                     android:layout_marginLeft="15dp"
                     />
             </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linear_forgotpassword"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:visibility="gone">
+                <TextView
+                    android:id="@+id/txt_forgotpassword"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Forgot Password"
+                    android:gravity="center"
+                    android:textSize="18dp"
+                    android:textColor="@color/blue"/>
+
+            </LinearLayout>
+
+
 
 
 
@@ -237,3 +264,4 @@
     </LinearLayout>
 
 </ScrollView>
+</RelativeLayout>
