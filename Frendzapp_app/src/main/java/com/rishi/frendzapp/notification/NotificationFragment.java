@@ -73,7 +73,7 @@ public class NotificationFragment extends BaseFragment {
         final LinearLayout Notification_Tone=(LinearLayout)v.findViewById(R.id.Linear_two);
         final TextView set_Notification_Tone=(TextView)v.findViewById(R.id.set_Tone);
         final CheckBox chk_mute = (CheckBox) v.findViewById(R.id.chk_mute);
-        final CheckBox chk_vibrate = (CheckBox) v.findViewById(R.id.chk_mute);
+        final CheckBox chk_vibrate = (CheckBox) v.findViewById(R.id.vibrate_chkbox);
         helper = new PrefsHelper(getActivity());
 
 

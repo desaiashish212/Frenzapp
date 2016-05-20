@@ -177,18 +177,22 @@ public class SelfieModeActivity extends BaseActivity implements ReceiveFileFromB
 			System.out.println("In REQUEST_CROP");
 			handleCrop(resultCode, data);
 		}else {
-			if (mFileUri != null) {
+			if (mFileUri != null && data != null) {
 				String mFilePath = mFileUri.toString();
 				if (mFilePath != null) {
 					setImage(mFilePath);
 				}
+				//bitmap = (Bitmap) data.getExtras().get("data");
+				tempUri = getImageUri(this, bitmap);
+				//imageView.setImageBitmap(photo);
+				this.requestCode = requestCode;
+				this.resultCode = resultCode;
+				this.data = data;
+			}else {
+				setResult(BaseActivity.RESULT_CANCELED);
+				finish();
 			}
-			//bitmap = (Bitmap) data.getExtras().get("data");
-			tempUri = getImageUri(this, bitmap);
-			//imageView.setImageBitmap(photo);
-			this.requestCode = requestCode;
-			this.resultCode = resultCode;
-			this.data = data;
+
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
