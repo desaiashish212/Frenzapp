@@ -33,17 +33,14 @@ public class AccountFragment extends BaseFragment {
         linear_one.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(),"you clicked on the one",Toast.LENGTH_SHORT).show();
-                Intent intent=new Intent(getActivity(),AccountPaymentInfoActivity.class);
-                startActivity(intent);
-                getActivity().finish();
+                AccountPaymentInfoActivity.start(baseActivity);
             }
         });
 
         linear_two.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(),"you clicked on the two",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),"you clicked on the delete",Toast.LENGTH_SHORT).show();
             }
         });
 
