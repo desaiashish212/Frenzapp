@@ -86,7 +86,7 @@
                             android:layout_marginRight="3.0dip"
                             android:src="@drawable/badge_online" />
                         <TextView android:textSize="@dimen/text_size"
-                            android:textColor="@color/black"
+                            android:textColor="@color/white"
                             android:layout_gravity="center"
                             android:id="@+id/online_status_textview"
                             android:layout_width="wrap_content"

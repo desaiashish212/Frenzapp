@@ -28,7 +28,7 @@ public class FriendUtils {
         User user = new User();
         user.setUserId(qbUser.getId());
         user.setFullName(qbUser.getFullName());
-        user.setLogin(qbUser.getEmail());
+        user.setLogin(qbUser.getLogin());
         user.setEmail(qbUser.getEmail());
         user.setPhone(qbUser.getPhone());
 
@@ -36,6 +36,7 @@ public class FriendUtils {
 
         if (userCustomData != null) {
             user.setAvatarUrl(userCustomData.getAvatar_url());
+            user.setAudio_status(userCustomData.getAudio_status());
             user.setDob(userCustomData.getDob());
             user.setCity(userCustomData.getCity());
             user.setStatus(userCustomData.getStatus());
