@@ -353,4 +353,11 @@ public class SelfieModeActivity extends BaseActivity implements ReceiveFileFromB
 			}
 		}
 	}
+
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		setResult(BaseActivity.RESULT_CANCELED);
+		finish();
+	}
 }

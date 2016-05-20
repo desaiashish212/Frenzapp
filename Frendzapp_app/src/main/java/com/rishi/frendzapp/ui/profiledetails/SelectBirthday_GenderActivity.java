@@ -37,6 +37,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class SelectBirthday_GenderActivity extends BaseAuthActivity
@@ -90,14 +92,15 @@ public class SelectBirthday_GenderActivity extends BaseAuthActivity
                 dob=display_date.getText().toString();
                 name = fullname_edittext.getText().toString().trim();
                 email= email_edittext.getText().toString().trim();
-                if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(email) &&!TextUtils.isEmpty(dob )) {
-                    if (name.length()>2)
-                    updateUserData();
-                    else
-                        Toast.makeText(this,"Name must be more than two character",Toast.LENGTH_LONG).show();
-                }
-                else
-                Toast.makeText(this,"Please fill all field",Toast.LENGTH_LONG).show();
+//                if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(email) &&!TextUtils.isEmpty(dob )) {
+//                    if (name.length()>2)
+//                    updateUserData();
+//                    else
+//                        Toast.makeText(this,"Name must be more than two character",Toast.LENGTH_LONG).show();
+//                }
+//                else
+//                Toast.makeText(this,"Please fill all field",Toast.LENGTH_LONG).show();
+                updateUserData();
                 break;
             case R.id.img_calender:
                 showDialog(DATE_PICKER_ID);
@@ -149,12 +152,36 @@ public class SelectBirthday_GenderActivity extends BaseAuthActivity
     }
     private void updateUserData() {
        // updateCurrentUserData();
-        if (isUserDataChanged()) {
+        if (name.length()==0) {
+
+            fullname_edittext.requestFocus();
+            fullname_edittext.setError("FIELD CANNOT BE EMPTY");
+        }else if(!name.matches("[a-zA-Z ]+"))
+        {
+            fullname_edittext.requestFocus();
+            fullname_edittext.setError("ENTER ONLY ALPHABETICAL CHARACTER");
+        }else if(email.length()==0){
+            email_edittext.requestFocus();
+            email_edittext.setError("FIELD CANNOT BE EMPTY");
+        }else if (!isValidEmail(email)){
+            email_edittext.requestFocus();
+            email_edittext.setError("Invalid Email");
+        }else if (dob.length() == 0){
+            display_date.setError("FIELD CANNOT BE EMPTY");
+        }else {
             saveChanges();
             System.out.println("Next Activity");
-        }else{
-            Toast.makeText(SelectBirthday_GenderActivity.this, "Please fill all information", Toast.LENGTH_LONG).show();
         }
+
+
+
+
+
+
+
+//        }else{
+//            Toast.makeText(SelectBirthday_GenderActivity.this, "Please fill all information", Toast.LENGTH_LONG).show();
+//        }
     }
 
     public void updateCurrentUserData(){
@@ -167,8 +194,18 @@ public class SelectBirthday_GenderActivity extends BaseAuthActivity
     }
 
     private boolean isUserDataChanged() {
-        return !TextUtils.isEmpty(name) || !TextUtils.isEmpty(email) || !TextUtils.isEmpty(dob);
+        return !TextUtils.isEmpty(name) || !name.matches("[a-zA-Z ]+") ||!TextUtils.isEmpty(email) || !isValidEmail(email) || !TextUtils.isEmpty(dob);
     }
+    private boolean isValidEmail(String email) {
+        String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+        Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
+
 
     private void saveChanges(){
         if (!isUserDataCorrect()) {

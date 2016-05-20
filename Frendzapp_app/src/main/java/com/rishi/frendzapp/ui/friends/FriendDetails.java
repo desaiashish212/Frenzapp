@@ -172,7 +172,7 @@ public class FriendDetails extends BaseLogeableActivity implements View.OnClickL
     }
 
     private void setAudioStatus() {
-
+            System.out.println("Audio:"+user.getAudio_status());
         if (!TextUtils.isEmpty(user.getAudio_status())) {
             System.out.println("VISIBLE");
             audioStatusView.setVisibility(View.VISIBLE);

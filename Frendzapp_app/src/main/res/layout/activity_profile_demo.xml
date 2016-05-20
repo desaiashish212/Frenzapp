@@ -103,19 +103,19 @@
                         android:id="@+id/txt_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="16dp"
                         android:paddingTop="5dp"
-                        android:paddingLeft="15dp"/>
+                        android:layout_marginLeft="15dp"/>
 
                     <TextView
                         android:layout_marginTop="5dp"
                         android:id="@+id/txt_number"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="16dp"
-                        android:paddingLeft="15dp"
+                        android:layout_marginLeft="15dp"
                         android:paddingBottom="5dp"/>
 
 
@@ -149,7 +149,6 @@
                         android:id="@+id/txt_status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Busy.."
                         android:paddingLeft="10dp"
                         android:paddingTop="2dp"
                         android:textColor="@color/black"

@@ -89,7 +89,7 @@ public class VerificationActivity extends Activity {
                 if (no.length()>=10)
                 initiatePopupWindow(no);
                 else
-                    Toast.makeText(VerificationActivity.this,"Enter valide mobile number",Toast.LENGTH_LONG).show();
+                    Toast.makeText(VerificationActivity.this,"Enter valid mobile number",Toast.LENGTH_LONG).show();
             }
         });
     }
