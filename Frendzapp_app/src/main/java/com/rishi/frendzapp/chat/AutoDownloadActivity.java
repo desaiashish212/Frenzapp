@@ -1,6 +1,8 @@
 package com.rishi.frendzapp.chat;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -14,7 +16,10 @@ import com.rishi.frendzapp.ui.base.BaseLogeableActivity;
  * Created by Dharendra on 28-Apr-16.
  */
 public class AutoDownloadActivity extends BaseLogeableActivity
-{
+{public static void start(Context context) {
+    Intent intent = new Intent(context, AutoDownloadActivity.class);
+    context.startActivity(intent);
+}
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -88,7 +93,11 @@ public class AutoDownloadActivity extends BaseLogeableActivity
         });
 
 }
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 
 }
 

@@ -41,9 +41,7 @@ public class ChatsFragment extends BaseFragment {
         text_auto_download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent inti=new Intent(getActivity(),AutoDownloadActivity.class);
-                startActivity(inti);
-                getActivity().finish();
+                AutoDownloadActivity.start(baseActivity);
             }
         });
 
