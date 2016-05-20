@@ -122,6 +122,8 @@ public class NotificationFragment extends BaseFragment {
                 if(isChecked)
                 {
                     helper.savePref(PrefsHelper.PREF_NOTIFICATION_VIBRATE,true);
+                    Vibrator vibs = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+                    vibs.vibrate(1000);
                 }
                 else {
                     helper.savePref(PrefsHelper.PREF_NOTIFICATION_VIBRATE,false);
