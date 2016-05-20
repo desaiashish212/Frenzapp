@@ -210,6 +210,8 @@ public class Profile extends BaseLogeableActivity implements ReceiveFileFromBitm
         });
     }
 
+
+
     private void initCustomData() {
         userCustomData = Utils.customDataToObject(user.getCustomData());
 
