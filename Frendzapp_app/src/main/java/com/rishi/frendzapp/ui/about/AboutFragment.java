@@ -23,4 +23,11 @@ public class AboutFragment extends BaseFragment {
         View v = inflater.inflate(R.layout.fragment_about,container,false);
         return v;
     }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+       // title = getString(R.string.nvd_title_settings);
+    }
 }

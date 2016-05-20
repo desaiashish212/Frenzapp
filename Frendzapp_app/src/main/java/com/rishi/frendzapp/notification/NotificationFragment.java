@@ -65,6 +65,12 @@ public class NotificationFragment extends BaseFragment {
     public static NotificationFragment newInstance() {
         return new NotificationFragment();
     }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+      //  title = getString(R.string.nvd_title_settings);
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

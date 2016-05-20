@@ -30,4 +30,10 @@ public class ShareFragment extends BaseFragment {
         startActivity(sendIntent);
         return null;
     }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+       // title = getString(R.string.nvd_title_settings);
+    }
 }

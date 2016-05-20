@@ -41,7 +41,8 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //title = getString(R.string.nvd_title_feedback);
+        setHasOptionsMenu(true);
+       // title = getString(R.string.nvd_title_settings);
     }
 
     @Override

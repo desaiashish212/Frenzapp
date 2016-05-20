@@ -177,7 +177,7 @@ public class SelfieModeActivity extends BaseActivity implements ReceiveFileFromB
 			System.out.println("In REQUEST_CROP");
 			handleCrop(resultCode, data);
 		}else {
-			if (mFileUri != null && data != null) {
+			if (mFileUri != null ) {
 				String mFilePath = mFileUri.toString();
 				if (mFilePath != null) {
 					setImage(mFilePath);
@@ -196,6 +196,7 @@ public class SelfieModeActivity extends BaseActivity implements ReceiveFileFromB
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
+
 
 	public void setImage(String filepath) {
 		filepath = filepath.replace("file://", ""); // remove to avoid BitmapFactory.decodeFile return null
@@ -266,6 +267,9 @@ public class SelfieModeActivity extends BaseActivity implements ReceiveFileFromB
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			// action with ID action_refresh was selected
+			case android.R.id.home:
+				navigateToParent();
+				return true;
 			case R.id.action_set_profile:
 				//Toast.makeText(this, "You clicked on SetProfile", Toast.LENGTH_SHORT).show();
 				if (requestCode == Crop.REQUEST_CROP) {

@@ -128,7 +128,7 @@ public class Profile extends BaseLogeableActivity implements ReceiveFileFromBitm
 
 
     public static void start(Context context) {
-        Intent intent = new Intent(context, ProfileActivity.class);
+        Intent intent = new Intent(context, Profile.class);
         context.startActivity(intent);
     }
 

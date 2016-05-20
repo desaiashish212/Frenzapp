@@ -126,7 +126,7 @@ public class MainActivity extends BaseLogeableActivity implements NavigationDraw
                 fragment = FeedbackFragment.newInstance();
                 break;
             case ID_INVITE_FRAGMENT:
-                fragment = ShareFragment.newInstance();
+                fragment = SettingsFragment.newInstance();
                 break;
             case ID_ABOUT_FRAGMENT:
                 fragment = AboutFragment.newInstance();
