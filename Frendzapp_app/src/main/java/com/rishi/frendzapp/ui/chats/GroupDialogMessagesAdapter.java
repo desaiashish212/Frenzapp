@@ -126,7 +126,7 @@ public class GroupDialogMessagesAdapter extends BaseDialogMessagesAdapter {
 
         if (notificationMessage) {
             viewHolder.messageTextView.setText(messageCache.getMessage());
-        //    viewHolder.timeTextMessageTextView.setText(DateUtils.longToMessageDate(messageCache.getTime()));
+            viewHolder.timeTextMessageTextView.setText(DateUtils.longToMessageDate(messageCache.getTime()));
         } else {
             resetUI(viewHolder);
 
