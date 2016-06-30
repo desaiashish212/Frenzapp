@@ -25,7 +25,7 @@ public class ShareFragment extends BaseFragment {
          View v = inflater.inflate(R.layout.fragment_share,container,false);
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "Check out FrendzApp messenger for your smartphone.Download it today from this link");
         sendIntent.setType("text/plain");
         startActivity(sendIntent);
         return null;

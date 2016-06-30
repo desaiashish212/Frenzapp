@@ -281,6 +281,39 @@ public abstract class QBBaseChatHelper extends BaseHelper {
         return attachment;
     }
 
+    protected QBChatMessage getQBChatMessageAudio(String body, QBFile file) {
+        long time = DateUtilsCore.getCurrentTime();
+        QBChatMessage chatMessage = new QBChatMessage();
+        chatMessage.setBody(body);
+
+        if (file != null) {
+            QBAttachment attachment = getAttachmentAudio(file);
+            chatMessage.addAttachment(attachment);
+            String ad = URLConnection.guessContentTypeFromName(attachment.getType());
+            System.out.println("Name:"+attachment.getName()+"......"+"Type:"+ad);
+        }
+
+        chatMessage.setProperty(ChatNotificationUtils.PROPERTY_DATE_SENT, time + ConstsCore.EMPTY_STRING);
+        chatMessage.setProperty(ChatNotificationUtils.PROPERTY_SAVE_TO_HISTORY,
+                ChatNotificationUtils.VALUE_SAVE_TO_HISTORY);
+
+        return chatMessage;
+    }
+
+    private QBAttachment getAttachmentAudio(QBFile file) {
+        // TODO temp value
+        String contentType = "mp3";
+        QBAttachment attachment = new QBAttachment(QBAttachment.AUDIO_TYPE);
+        attachment.setId(file.getUid());
+        attachment.setName(file.getName());
+        attachment.setContentType(contentType);
+        attachment.setUrl(file.getPublicUrl());
+        attachment.setSize(file.getSize());
+        attachment.setType("audio");
+
+        return attachment;
+    }
+
     public void sendTypingStatusToServer(int opponentId, boolean startTyping) {
         QBPrivateChat privateChat = createPrivateChatIfNotExist(opponentId);
 

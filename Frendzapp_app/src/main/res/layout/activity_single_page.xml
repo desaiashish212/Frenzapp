@@ -30,6 +30,7 @@
                     android:text="Special Offer"
                     android:textStyle="bold"
                     android:textSize="14dp"
+                    android:textColor="@color/gray"
                     />
                 <View
                     android:layout_width="fill_parent"
@@ -46,7 +47,7 @@
                     android:layout_width="match_parent"
                     android:layout_gravity="center"
 
-                    android:layout_height="300dp"/>
+                    android:layout_height="wrap_content"/>
 
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -193,16 +194,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
+                        android:gravity="center"
                         android:background="@drawable/blue_button"
                         >
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Day"
+                            android:text="day"
                             android:textSize="11dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_gravity="center"
                             android:textColor="#ffffff"
                             />
                         <TextView
@@ -211,11 +211,9 @@
                             android:layout_height="wrap_content"
                             android:textSize="14dp"
                             android:textStyle="bold"
-                            android:layout_gravity="center"
                             android:layout_marginTop="5dp"
-                            android:text="1"
+                            android:text="10"
                             android:textColor="#ffffff"/>
-
                     </LinearLayout>
 
 
@@ -474,6 +472,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="Description"
+                        android:textColor="@color/gray"
                         android:textSize="14dp"
                         android:textStyle="bold"/>
                     <View
@@ -501,6 +500,7 @@
                         android:layout_height="wrap_content"
                         android:text="Shop Name"
                         android:textSize="14dp"
+                        android:textColor="@color/gray"
                         android:textStyle="bold"/>
                     <View
                         android:layout_width="fill_parent"
@@ -529,6 +529,7 @@
                         android:text="Address"
                         android:layout_marginTop="10dp"
                         android:textSize="14dp"
+                        android:textColor="@color/gray"
                         android:textStyle="bold"/>
                     <View
                         android:layout_width="fill_parent"
@@ -555,6 +556,7 @@
                         android:text="Contact"
                         android:layout_marginTop="10dp"
                         android:textSize="14dp"
+                        android:textColor="@color/gray"
                         android:textStyle="bold"/>
                     <View
                         android:layout_width="fill_parent"

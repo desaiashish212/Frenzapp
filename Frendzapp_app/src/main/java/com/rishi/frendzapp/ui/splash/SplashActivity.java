@@ -63,7 +63,7 @@ public class SplashActivity extends BaseActivity {
             startLanding();
         }
 
-        setContentView(R.layout.activity_splash);
+        setContentView(R.layout.activity_splash_one);
     }
 
     @Override

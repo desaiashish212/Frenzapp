@@ -41,7 +41,9 @@
         android:hint="@string/dlg_hint_message"
         android:maxLines="5"
         android:textColor="@color/black"
-        emojicon:emojiconSize="@dimen/chat_emoji_item_preview_size" />
+        emojicon:emojiconSize="@dimen/chat_emoji_item_preview_size"
+        android:inputType="text"
+        />
 
     <ImageButton
         android:id="@+id/smile_panel_imagebutton"

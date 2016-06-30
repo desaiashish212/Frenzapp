@@ -17,6 +17,8 @@
 
         <include layout="@layout/view_chat_attach_message_opponent" />
 
+        <include layout="@layout/view_audio_attach_opponent" />
+
     </LinearLayout>
 
 </RelativeLayout>

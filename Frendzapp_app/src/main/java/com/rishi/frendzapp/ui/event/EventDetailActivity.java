@@ -50,11 +50,13 @@ public class EventDetailActivity extends BaseLogeableActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_event_detail);
+        setContentView(R.layout.activity_event_one_detail_one);
         int friendId = getIntent().getExtras().getInt(QBServiceConsts.EXTRA_FRIEND_ID);
         user = UsersDatabaseManager.getUserById(this, friendId);
         day = getDatabaseDateDay(user.getDob());
+
         month = getDatabaseDateMonth(user.getDob());
+
         year = getDatabaseDateYear(user.getDob());
         init();
         initListener();
@@ -65,6 +67,7 @@ public class EventDetailActivity extends BaseLogeableActivity {
         dob_textView = (TextView) findViewById(R.id.dob_textview);
         days_textView = (TextView) findViewById(R.id.days_textview);
         congo_button = (Button) findViewById(R.id.congo_button);
+       // congo_button.setVisibility(View.GONE);
         dp = (RoundedImageView) findViewById(R.id.avatar_imageview);
         name_textView.setText(user.getFullName());
         dob_textView.setText(user.getDob());
@@ -87,6 +90,7 @@ public class EventDetailActivity extends BaseLogeableActivity {
                             ErrorUtils.showError(EventDetailActivity.this, e);
                         }
                     }
+                    congo_button.setVisibility(View.VISIBLE);
                 } else {
                     Toast.makeText(EventDetailActivity.this, "Today is not his Birthday", Toast.LENGTH_LONG).show();
                 }
@@ -121,7 +125,10 @@ public class EventDetailActivity extends BaseLogeableActivity {
     }
     private int getDatabaseDateYear(String string) {
         int index = this.databaseDateFormat.indexOf("yyyy");
+
         String str = string.substring(index, index + 4);
+
+
         return Integer.parseInt(str);
     }
 
@@ -130,9 +137,27 @@ public class EventDetailActivity extends BaseLogeableActivity {
      * @return
      */
     private int getDatabaseDateMonth(String string) {
-        int index = this.databaseDateFormat.indexOf("mm");
+       // int index = this.databaseDateFormat.indexOf("mm");
+        int index = Integer.valueOf(databaseDateFormat.indexOf("mm"));
+
         String str = string.substring(index, index + 2);
-        return Integer.parseInt(str) - 1;
+        String sSource = str.replaceAll("/", "");
+//
+        String[] schoolbag2 = { "M","J","F","M","M","J","F","M","M","J","F","M","l" };
+        for(int i=0;i<=sSource.length();i++)
+        {
+            if(sSource==schoolbag2[i])
+            {
+                Toast.makeText(EventDetailActivity.this, "Month is"+sSource, Toast.LENGTH_LONG).show();
+
+            }
+        }
+
+
+        return Integer.parseInt(sSource) - 1;
+
+
+
     }
 
     /**
@@ -140,7 +165,8 @@ public class EventDetailActivity extends BaseLogeableActivity {
      * @return
      */
     private int getDatabaseDateDay(String string) {
-        int index = this.databaseDateFormat.indexOf("dd");
+       int index = this.databaseDateFormat.indexOf("dd");
+
         String str = string.substring(index, index + 2);
         return Integer.parseInt(str);
 

@@ -22,7 +22,8 @@
         android:textSize="@dimen/text_size_small"
         android:layout_alignTop="@+id/counter_textview"
         android:layout_toRightOf="@+id/menu_imageView"
-        android:layout_toEndOf="@+id/menu_imageView" />
+        android:layout_toEndOf="@+id/menu_imageView"
+        />
 
     <TextView
         android:id="@+id/counter_textview"

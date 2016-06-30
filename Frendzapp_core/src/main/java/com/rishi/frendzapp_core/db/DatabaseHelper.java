@@ -102,6 +102,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 .append(MessageTable.Cols.TIME).append(" LONG, ")
                 .append(MessageTable.Cols.ATTACH_FILE_ID).append(" TEXT, ")
                 .append(MessageTable.Cols.IS_READ).append(" INTEGER, ")
+                .append(MessageTable.Cols.IS_ATTACHE).append(" INTEGER, ")
+                .append(MessageTable.Cols.ATTACHE_PATH).append(" TEXT, ")
                 .append(MessageTable.Cols.IS_DELIVERED).append(" INTEGER, ")
                 .append(MessageTable.Cols.IS_SYNC).append(" INTEGER, ")
                 .append(MessageTable.Cols.FRIENDS_NOTIFICATION_TYPE).append(" INTEGER");
@@ -120,6 +122,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 .append(MessageTable.Cols.TIME).append(" LONG, ")
                 .append(MessageTable.Cols.ATTACH_FILE_ID).append(" TEXT, ")
                 .append(MessageTable.Cols.IS_READ).append(" INTEGER, ")
+                .append(MessageTable.Cols.IS_ATTACHE).append(" INTEGER, ")
+                .append(MessageTable.Cols.ATTACHE_PATH).append(" TEXT, ")
                 .append(MessageTable.Cols.IS_DELIVERED).append(" INTEGER, ")
                 .append(MessageTable.Cols.IS_SYNC).append(" INTEGER, ")
                 .append(MessageTable.Cols.FRIENDS_NOTIFICATION_TYPE).append(" INTEGER");

@@ -4,14 +4,23 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.media.MediaPlayer;
+import android.media.ThumbnailUtils;
+import android.os.AsyncTask;
+import android.os.Environment;
+import android.os.Handler;
+import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -21,6 +30,7 @@ import com.quickblox.chat.model.QBDialog;
 import com.rishi.frendzapp.R;
 import com.rishi.frendzapp.utils.Consts;
 import com.rishi.frendzapp.utils.FileHelper;
+import com.rishi.frendzapp.utils.RateTextCircularProgressBar;
 import com.rishi.frendzapp_core.db.tables.MessageTable;
 import com.rishi.frendzapp.ui.base.BaseCursorAdapter;
 import com.rishi.frendzapp.ui.views.MaskedImageView;
@@ -29,8 +39,16 @@ import com.rishi.frendzapp_core.utils.ConstsCore;
 import com.rishi.frendzapp.utils.DateUtils;
 import com.rishi.frendzapp.utils.ImageUtils;
 import com.rishi.frendzapp.utils.ReceiveFileFromBitmapTask;
+import com.rishi.frendzapp_core.utils.PrefsHelper;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -52,6 +70,9 @@ public class BaseDialogMessagesAdapter extends BaseCursorAdapter implements Rece
     private Random random;
     private static Map<Integer, Integer> colorsMap = new HashMap<Integer, Integer>();
     private FileHelper fileHelper;
+    private Handler handler = new Handler();;
+    private String filePath = "/mnt/sdcard/Frendzapp/";
+    private MediaPlayer mp;
 
     public BaseDialogMessagesAdapter(Context context, Cursor cursor) {
         super(context, cursor, true);
@@ -84,6 +105,300 @@ public class BaseDialogMessagesAdapter extends BaseCursorAdapter implements Rece
         ImageLoader.getInstance().displayImage(attachUrl, viewHolder.attachImageView,
                 Consts.UIL_DEFAULT_DISPLAY_OPTIONS, new ImageLoadingListener(viewHolder),
                 new SimpleImageLoadingProgressListener(viewHolder));
+    }
+
+    protected void showImage(String attachUrl, final ViewHolder viewHolder) {
+        final String fileName = attachUrl.substring(attachUrl.lastIndexOf('/')+1, attachUrl.length() )+".jpeg";
+        if (getImage()){
+
+            if (fileHelper.checkExsistFile(fileName)){
+                ImageLoader.getInstance().displayImage("file:///" + filePath + fileName, viewHolder.attachImageView,
+                        Consts.UIL_DEFAULT_DISPLAY_OPTIONS, new ImageLoadingListener(viewHolder),
+                        new SimpleImageLoadingProgressListener(viewHolder));
+            }else{
+
+                ImageLoader.getInstance().displayImage(attachUrl, viewHolder.attachImageView,
+                        Consts.UIL_DEFAULT_DISPLAY_OPTIONS, new ImageLoadingListener(viewHolder),
+                        new SimpleImageLoadingProgressListener(viewHolder));
+
+            }
+
+        }else {
+
+            if (fileHelper.checkExsistFile(fileName)){
+                ImageLoader.getInstance().displayImage("file:///" + filePath + fileName, viewHolder.attachImageView,
+                        Consts.UIL_DEFAULT_DISPLAY_OPTIONS, new ImageLoadingListener(viewHolder),
+                        new SimpleImageLoadingProgressListener(viewHolder));
+            }else{
+
+                System.out.println("InElse:"+fileName);
+
+            }
+
+        }
+    }
+
+    protected void showVideo(String attachUrl, final ViewHolder viewHolder) {
+        final String fileName = attachUrl.substring(attachUrl.lastIndexOf('/')+1, attachUrl.length() )+".mp4";
+        if (getVideo()){
+
+            if (fileHelper.checkExsistFile(fileName)){
+                ImageLoader.getInstance().displayImage("file:///" + filePath + fileName, viewHolder.attachImageView,
+                        Consts.UIL_DEFAULT_DISPLAY_OPTIONS, new ImageLoadingListener(viewHolder),
+                        new SimpleImageLoadingProgressListener(viewHolder));
+            }else{
+
+                MyTaskParams myTaskParams = new MyTaskParams(attachUrl,viewHolder,".mp4");
+                new DownloadFileFromURL().execute(myTaskParams);
+
+            }
+
+        }else {
+
+            if (fileHelper.checkExsistFile(fileName)){
+                ImageLoader.getInstance().displayImage("file:///" + filePath + fileName, viewHolder.attachImageView,
+                        Consts.UIL_DEFAULT_DISPLAY_OPTIONS, new ImageLoadingListener(viewHolder),
+                        new SimpleImageLoadingProgressListener(viewHolder));
+            }else{
+
+                System.out.println("Please Download video");
+
+            }
+
+        }
+    }
+
+    protected void showAudio(String attachUrl, final ViewHolder viewHolder) {
+        final String fileName = attachUrl.substring(attachUrl.lastIndexOf('/')+1, attachUrl.length() )+".mp3";
+        if (getVideo()){
+
+            if (fileHelper.checkExsistFile(fileName)){
+                showAudioLayouts(viewHolder,fileName);
+            }else{
+
+                MyTaskParams myTaskParams = new MyTaskParams(attachUrl,viewHolder,".mp3");
+                new DownloadFileFromURL().execute(myTaskParams);
+
+            }
+
+        }else {
+
+            if (fileHelper.checkExsistFile(fileName)){
+                showAudioLayouts(viewHolder,fileName);
+            }else{
+
+                System.out.println("Please Download video");
+
+            }
+
+        }
+    }
+
+    private static class MyTaskParams {
+        String filePath;
+        ViewHolder viewHolder;
+        String fileType;
+
+        MyTaskParams(String filePath, ViewHolder viewHolder,String fileType) {
+            this.filePath = filePath;
+
+             this.viewHolder = viewHolder;
+            this.fileType = fileType;
+        }
+    }
+
+    class DownloadFileFromURL extends AsyncTask<MyTaskParams, String, String> {
+
+        private static final String folderName = "/Frendzapp";
+        private String fileName;
+        private String filePath;
+        private String fileType;
+        private ViewHolder viewHolder;
+
+        /**
+         * Before starting background thread
+         * Show Progress Bar Dialog
+         * */
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(MyTaskParams... params) {
+            int count;
+
+            viewHolder = params[0].viewHolder;
+            filePath =  params[0].filePath;
+            fileType =  params[0].fileType;
+            fileName = filePath.substring(filePath.lastIndexOf('/')+1, filePath.length() )+fileType;
+            try {
+                URL url = new URL(params[0].filePath);
+                URLConnection conection = url.openConnection();
+                conection.connect();
+                int lenghtOfFile = conection.getContentLength();
+                InputStream input = new BufferedInputStream(url.openStream(), 8192);
+                OutputStream output = new FileOutputStream(Environment.getExternalStorageDirectory() + folderName+"/"+fileName);
+
+                byte data[] = new byte[1024];
+
+                long total = 0;
+
+                while ((count = input.read(data)) != -1) {
+                    total += count;
+                    publishProgress(""+(int)((total*100)/lenghtOfFile));
+
+                    output.write(data, 0, count);
+                }
+
+                output.flush();
+
+                output.close();
+                input.close();
+
+            } catch (Exception e) {
+                Log.e("Error:", e.getMessage());
+            }
+
+            return fileType;
+        }
+
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+            viewHolder.centeredProgressBar.setProgress(Integer.parseInt(values[0]));
+
+        }
+
+        @Override
+        protected void onPostExecute(String fileType) {
+            if (fileType.equals(".mp4")){
+        ImageLoader.getInstance().displayImage("file:///" + "/mnt/sdcard/Frendzapp/" + fileName, viewHolder.attachImageView,
+                Consts.UIL_DEFAULT_DISPLAY_OPTIONS, new BaseDialogMessagesAdapter.ImageLoadingListener(viewHolder),
+                new BaseDialogMessagesAdapter.SimpleImageLoadingProgressListener(viewHolder));
+            }else if (fileType.equals(".mp3")){
+                showAudioLayouts(viewHolder,filePath);
+
+            }
+
+        }
+
+    }
+
+    private void showAudioLayouts(final ViewHolder viewHolder,final  String fileName){
+        setViewVisibility(viewHolder.progressRelativeLayout, View.GONE);
+        setViewVisibility(viewHolder.attachAudioRelativeLayout, View.VISIBLE);
+        viewHolder.startMedia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mp == null) {
+
+
+                    try
+                    {
+                        mp=new MediaPlayer();
+
+                        if (mp.isPlaying())
+                            mp.reset();
+                        mp.setDataSource("file:///" + "/mnt/sdcard/Frendzapp/" + fileName);
+                        mp.prepare();
+                        mp.start();
+                        viewHolder.seekBar.setEnabled(true);
+
+
+                    } catch (Exception e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+
+                }
+                if (mp.isPlaying())
+                { ;
+                    mp.pause();
+                    //tartMedia.setText("play");
+                    viewHolder.startMedia.setImageResource(R.drawable.play);
+
+                }
+                else
+                {
+                    mp.start();
+                    //startMedia.setText("pause");
+                    viewHolder.startMedia.setImageResource(R.drawable.pause);
+                    viewHolder.seekBar.setMax(mp.getDuration());
+
+                    Thread thread = new Thread() {
+                        int currentPosition = mp.getCurrentPosition();
+                        int total = mp.getDuration();
+                        @Override
+                        public void run() {
+                            try {
+                                while (mp != null && currentPosition < total) {
+                                    try {
+                                        Thread.sleep(1000);
+                                        currentPosition = mp.getCurrentPosition();
+                                    } catch (InterruptedException e) {
+                                        return;
+                                    } catch (Exception e) {
+                                        return;
+                                    }
+                                    viewHolder.seekBar.setProgress(currentPosition);
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    };
+
+                    thread.start();
+                }
+            }
+        });
+    }
+
+
+    class FileSize extends AsyncTask<MyTaskParams, Integer, String>
+    {
+        ViewHolder viewHolder;
+        protected void onPreExecute (){
+            Log.d("PreExceute","On pre Exceute......");
+        }
+
+        protected String doInBackground(MyTaskParams...arg0) {
+            Log.d("DoINBackGround","On doInBackground...");
+            try {
+                viewHolder = arg0[0].viewHolder;
+                URL url = new URL(arg0[0].filePath);
+                URLConnection urlConnection = url.openConnection();
+                urlConnection.connect();
+                return String.valueOf(urlConnection.getContentLength());
+            }catch (Exception e){
+                Log.d("FileSize",e.toString());
+                return "0";
+            }
+        }
+
+
+        protected void onPostExecute(String result) {
+            Log.d("Size:",result);
+            //viewHolder.messageTextView.setText(result);
+        }
+    }
+
+    private boolean getImage() {
+        PrefsHelper helper = new PrefsHelper(context);
+        return helper.getPref(PrefsHelper.PREF_IMAGE, false);
+    }
+
+    private boolean getVideo() {
+        PrefsHelper helper = new PrefsHelper(context);
+        return helper.getPref(PrefsHelper.PREF_VIDEOS, false);
+    }
+
+    private boolean getAudio() {
+        PrefsHelper helper = new PrefsHelper(context);
+        return helper.getPref(PrefsHelper.PREF_AUDIO, false);
     }
 
     protected int getTextColor(Integer senderId) {
@@ -191,7 +506,6 @@ public class BaseDialogMessagesAdapter extends BaseCursorAdapter implements Rece
             return ConstsCore.ZERO_INT_VALUE;
         }
 
-
         if (!TextUtils.isEmpty(timeString)) {
             return timeString.subSequence(ConstsCore.ZERO_INT_VALUE, timeString.length() - 1).charAt(
                     ConstsCore.ZERO_INT_VALUE);
@@ -230,6 +544,7 @@ public class BaseDialogMessagesAdapter extends BaseCursorAdapter implements Rece
         public void onLoadingComplete(String imageUri, View view, final Bitmap loadedBitmap) {
             initMaskedImageView(loadedBitmap);
             fileHelper.checkExsistFile(imageUri, loadedBitmap);
+            System.out.println("imageUri:"+imageUri);
         }
 
         private void initMaskedImageView(Bitmap loadedBitmap) {
@@ -273,7 +588,7 @@ public class BaseDialogMessagesAdapter extends BaseCursorAdapter implements Rece
 
         @Override
         public void onProgressUpdate(String imageUri, View view, int current, int total) {
-            viewHolder.verticalProgressBar.setProgress(Math.round(100.0f * current / total));
+            viewHolder.centeredProgressBar.setProgress(Math.round(100.0f * current / total));
         }
     }
 
@@ -291,9 +606,13 @@ public class BaseDialogMessagesAdapter extends BaseCursorAdapter implements Rece
         public TextView timeTextMessageTextView;
         public TextView timeAttachMessageTextView;
         public ProgressBar verticalProgressBar;
-        public ProgressBar centeredProgressBar;
+        public RateTextCircularProgressBar centeredProgressBar;
         public ImageView acceptFriendImageView;
         public View dividerView;
         public ImageView rejectFriendImageView;
+        public SeekBar seekBar;
+        public ImageView startMedia;
+        public RelativeLayout attachAudioRelativeLayout;
+
     }
 }

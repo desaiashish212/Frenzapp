@@ -413,7 +413,7 @@ public class ChatDatabaseManager {
     }
 
     private static void saveChatMessage(Context context, MessageCache messageCache) {
-        Log.d("Fixes CHAT", "Start save message  in CHAT_DATATBASE_MANAGER");
+        Log.d("Fixes CHAT", "Start save message  in CHAT_DATABASE_MANAGER");
 
         ContentValues values = new ContentValues();
         MessagesNotificationType messagesNotificationType = messageCache.getMessagesNotificationType();

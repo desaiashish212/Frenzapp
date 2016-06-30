@@ -15,8 +15,9 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="5dp"
+
         app:border_color="@color/dark_gray"
-        app:border_width="@dimen/avatar_border_width"
+
         app:oval="true" />
 
     <LinearLayout
@@ -54,6 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:textColor="@color/gray"
+
                 android:textSize="@dimen/text_size_small" />
         </LinearLayout>
     </LinearLayout>

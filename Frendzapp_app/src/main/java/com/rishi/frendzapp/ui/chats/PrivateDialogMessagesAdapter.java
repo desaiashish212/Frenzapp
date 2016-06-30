@@ -14,10 +14,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.quickblox.chat.model.QBDialog;
 import com.rishi.frendzapp.R;
+import com.rishi.frendzapp.utils.RateTextCircularProgressBar;
 import com.rishi.frendzapp_core.db.managers.ChatDatabaseManager;
 import com.rishi.frendzapp_core.db.managers.UsersDatabaseManager;
 import com.rishi.frendzapp_core.models.MessagesNotificationType;
@@ -98,6 +100,8 @@ public class PrivateDialogMessagesAdapter extends BaseDialogMessagesAdapter {
 
             viewHolder.attachMessageRelativeLayout = (RelativeLayout) view.findViewById(
                     R.id.attach_message_relativelayout);
+            viewHolder.attachAudioRelativeLayout = (RelativeLayout) view.findViewById(
+                    R.id.attach_audio_relativelayout);
             viewHolder.timeAttachMessageTextView = (TextView) view.findViewById(
                     R.id.time_attach_message_textview);
             viewHolder.attachDeliveryStatusImageView = (ImageView) view.findViewById(R.id.attach_message_delivery_status_imageview);
@@ -111,11 +115,13 @@ public class PrivateDialogMessagesAdapter extends BaseDialogMessagesAdapter {
             viewHolder.verticalProgressBar = (ProgressBar) view.findViewById(R.id.vertical_progressbar);
             viewHolder.verticalProgressBar.setProgressDrawable(context.getResources().getDrawable(
                     R.drawable.vertical_progressbar));
-            viewHolder.centeredProgressBar = (ProgressBar) view.findViewById(R.id.centered_progressbar);
+            viewHolder.centeredProgressBar = (RateTextCircularProgressBar) view.findViewById(R.id.centered_progressbar);
             viewHolder.messageDeliveryStatusImageView = (ImageView) view.findViewById(R.id.text_message_delivery_status_imageview);
+            viewHolder.seekBar = (SeekBar) view.findViewById(R.id.seekBar1);
+            viewHolder.startMedia = (ImageView) view.findViewById(R.id.button1);
         } else {
             view = layoutInflater.inflate(R.layout.list_item_friends_notification_message, null, true);
-
+            viewHolder.textMessageView = view.findViewById(R.id.text_message_view);
             viewHolder.messageTextView = (EmojiTextView) view.findViewById(R.id.message_textview);
             viewHolder.timeTextMessageTextView = (TextView) view.findViewById(
                     R.id.time_text_message_textview);
@@ -162,8 +168,15 @@ public class PrivateDialogMessagesAdapter extends BaseDialogMessagesAdapter {
                 setMessageStatus(viewHolder.attachDeliveryStatusImageView, messageCache.isDelivered(),
                         messageCache.isRead());
             }
+            if (messageCache.getMessage().equals(context.getString(R.string.dlg_attached_last_message))){
+                showImage(messageCache.getAttachUrl(), viewHolder);
+            }else if (messageCache.getMessage().equals(context.getString(R.string.dlg_attached_video_last_message))) {
+                //displayAttachImage(messageCache.getAttachUrl(), viewHolder, messageCache.getMessage());
+                showVideo(messageCache.getAttachUrl(), viewHolder);
+            }else if (messageCache.getMessage().equals(context.getString(R.string.dlg_attached_audio_last_message))){
+                showAudio(messageCache.getAttachUrl(), viewHolder);
+            }
 
-            displayAttachImage(messageCache.getAttachUrl(), viewHolder);
         } else {
             resetUI(viewHolder);
 
@@ -195,7 +208,7 @@ public class PrivateDialogMessagesAdapter extends BaseDialogMessagesAdapter {
             setVisibilityFriendsActions(viewHolder, View.VISIBLE);
             initListeners(viewHolder, messageCache.getSenderId());
         }
-        viewHolder.messageTextView.setOnLongClickListener(new View.OnLongClickListener() {
+        viewHolder.textMessageView.setOnLongClickListener(new View.OnLongClickListener() {
 
             @Override
             public boolean onLongClick(View v) {

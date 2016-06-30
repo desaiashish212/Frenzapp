@@ -44,6 +44,7 @@ public class ImageUtils {
     public static final int GALLERY_IMAGE_PREVIEWER_CALLED = 2;
     public static final int CAPTURE_INTENT_CALLED = 3;
     public static final int GALLERY_INTENT_VIDEO = 4;
+    public static final int AUDIO_INTENT_CALLED = 5;
 
     private static final String TEMP_FILE_NAME = "temp.png";
 
@@ -182,6 +183,13 @@ public class ImageUtils {
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("image/*");
         activity.startActivityForResult(intent, GALLERY_INTENT_CALLED);
+    }
+
+    public void getAudio(){
+        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Audio.
+                Media.EXTERNAL_CONTENT_URI);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        activity.startActivityForResult(intent, AUDIO_INTENT_CALLED);
     }
 
     public void showFullImage(Activity activity, String absolutePath) {

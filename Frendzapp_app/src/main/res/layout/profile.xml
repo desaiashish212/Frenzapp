@@ -13,11 +13,12 @@
                 <RelativeLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content">
-                    <ImageView android:id="@+id/avatarImageView"
+                    <com.rishi.frendzapp.utils.SquaredImageView
+                        android:id="@+id/avatarImageView"
                         android:layout_width="fill_parent"
-                        android:layout_height="360dp"
+                        android:layout_height="wrap_content"
                         android:src="@drawable/placeholder_invite"
-                        android:scaleType="fitCenter"
+                        android:scaleType="fitXY"
                         android:adjustViewBounds="true" />
                     <ImageButton
                         android:id="@+id/edit_imaage"
@@ -34,7 +35,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true">
                         <RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
-                                                       <EditText
+                         <EditText
                                 android:id="@+id/et_name"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -113,9 +114,10 @@
                     android:ellipsize="end"
                     android:focusableInTouchMode="true"
                     android:inputType="text"
+                    android:paddingRight="5dp"
+                    android:singleLine="true"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_size"
-                    android:padding="10.0dip"/>
+                    android:textSize="@dimen/text_size"/>
 
             </LinearLayout>
             <LinearLayout

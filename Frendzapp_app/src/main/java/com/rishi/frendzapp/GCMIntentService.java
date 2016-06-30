@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
@@ -34,10 +35,13 @@ public class GCMIntentService extends IntentService {
     private String message;
     private String dialogId;
     private int userId;
+    private PrefsHelper helper;
 
     public GCMIntentService() {
         super("GcmIntentService");
     }
+
+    String TAG = GCMIntentService.class.getSimpleName();
 
     @Override
     protected void onHandleIntent(Intent intent) {
@@ -78,8 +82,7 @@ public class GCMIntentService extends IntentService {
         PendingIntent contentIntent = PendingIntent.getActivity(this, ConstsCore.ZERO_INT_VALUE, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this).setSmallIcon(
                 R.drawable.mainlogo).setContentTitle(getString(R.string.push_title)).setStyle(
-                new NotificationCompat.BigTextStyle().bigText(message)).setContentText(message).setVibrate(
-                new long[]{ConstsCore.ZERO_INT_VALUE, VIBRATOR_DURATION});
+                new NotificationCompat.BigTextStyle().bigText(message)).setContentText(message);
 
         builder.setAutoCancel(true);
         builder.setContentIntent(contentIntent);
@@ -102,8 +105,8 @@ public class GCMIntentService extends IntentService {
     // Playing notification sound
     public void playNotificationSound() {
         try {
-            PrefsHelper prefsHelper = PrefsHelper.getPrefsHelper();
-            String sound = prefsHelper.getPref(PrefsHelper.PREF_NOTIFICATION_NAME).toString();
+            helper = new PrefsHelper(getApplicationContext());
+            String sound = helper.getPref(PrefsHelper.PREF_NOTIFICATION_NAME).toString();
             System.out.println("sound:"+sound);
             sound.toLowerCase();
             Uri alarmSound = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE
@@ -111,9 +114,13 @@ public class GCMIntentService extends IntentService {
             System.out.println("uri:"+alarmSound);
             Ringtone r = RingtoneManager.getRingtone(App.getInstance().getApplicationContext(), alarmSound);
             r.play();
-            if (prefsHelper.getPref(PrefsHelper.PREF_NOTIFICATION_VIBRATE)){
+            Boolean con = helper.getPref(PrefsHelper.PREF_NOTIFICATION_VIBRATE);
+            if (con){
                 Vibrator vibs = (Vibrator) App.getInstance().getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
                 vibs.vibrate(1000);
+                Log.d(TAG,"Vibrate in if:"+helper.getPref(PrefsHelper.PREF_NOTIFICATION_VIBRATE));
+            }else {
+            Log.d(TAG,"Vibrate in else:"+helper.getPref(PrefsHelper.PREF_NOTIFICATION_VIBRATE));
             }
         } catch (Exception e) {
             e.printStackTrace();

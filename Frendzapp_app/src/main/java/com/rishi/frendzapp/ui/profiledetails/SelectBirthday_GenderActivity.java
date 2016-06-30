@@ -56,9 +56,9 @@ public class SelectBirthday_GenderActivity extends BaseAuthActivity
     //
     private TextView display_date;
     ImageView img_calender;
-    private int year;
-    private int month;
-    private int day;
+    private int year=1992;
+    private int month=04;
+    private int day=19;
     Date date_current;
     static final int DATE_PICKER_ID = 1111;
     public static void start(Context context) {
@@ -298,7 +298,7 @@ public class SelectBirthday_GenderActivity extends BaseAuthActivity
                 int compare_date=cal_current.getTime().compareTo(birth_date.getTime());
                 if(compare_date==1)
                 {
-                    display_date.setText(new StringBuilder().append(day).append("/").append(month + 1).append("/").append(year).append(" "));
+                    display_date.setText(new StringBuilder().append(String.format("%02d",day)).append("/").append(month + 1).append("/").append(year).append(" "));
                 }
 
                 else

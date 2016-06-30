@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.quickblox.chat.model.QBDialog;
 import com.rishi.frendzapp.R;
+import com.rishi.frendzapp.utils.RateTextCircularProgressBar;
 import com.rishi.frendzapp_core.db.managers.ChatDatabaseManager;
 import com.rishi.frendzapp_core.db.managers.UsersDatabaseManager;
 import com.rishi.frendzapp_core.models.MessageCache;
@@ -98,10 +99,10 @@ public class GroupDialogMessagesAdapter extends BaseDialogMessagesAdapter {
             viewHolder.timeTextMessageTextView = (TextView) view.findViewById(R.id.time_text_message_textview);
             viewHolder.verticalProgressBar = (ProgressBar) view.findViewById(R.id.vertical_progressbar);
             viewHolder.verticalProgressBar.setProgressDrawable(context.getResources().getDrawable(R.drawable.vertical_progressbar));
-            viewHolder.centeredProgressBar = (ProgressBar) view.findViewById(R.id.centered_progressbar);
+            viewHolder.centeredProgressBar = (RateTextCircularProgressBar) view.findViewById(R.id.centered_progressbar);
         } else {
             view = layoutInflater.inflate(R.layout.list_item_notification_message, null, true);
-
+            viewHolder.textMessageView = view.findViewById(R.id.text_message_view);
             viewHolder.messageTextView = (EmojiTextView) view.findViewById(R.id.message_textview);
             viewHolder.timeTextMessageTextView = (TextView) view.findViewById(
                     R.id.time_text_message_textview);
@@ -126,7 +127,7 @@ public class GroupDialogMessagesAdapter extends BaseDialogMessagesAdapter {
 
         if (notificationMessage) {
             viewHolder.messageTextView.setText(messageCache.getMessage());
-            viewHolder.timeTextMessageTextView.setText(DateUtils.longToMessageDate(messageCache.getTime()));
+//            viewHolder.timeTextMessageTextView.setText(DateUtils.longToMessageDate(messageCache.getTime()));
         } else {
             resetUI(viewHolder);
 
@@ -147,7 +148,13 @@ public class GroupDialogMessagesAdapter extends BaseDialogMessagesAdapter {
             if (!TextUtils.isEmpty(messageCache.getAttachUrl())) {
                 viewHolder.timeAttachMessageTextView.setText(DateUtils.longToMessageDate(messageCache.getTime()));
                 setViewVisibility(viewHolder.progressRelativeLayout, View.VISIBLE);
-                displayAttachImage(messageCache.getAttachUrl(), viewHolder);
+                //displayAttachImage(messageCache.getAttachUrl(), viewHolder);
+                if (messageCache.getMessage().equals(context.getString(R.string.dlg_attached_last_message))){
+                    showImage(messageCache.getAttachUrl(), viewHolder);
+                }else if (messageCache.getMessage().equals(context.getString(R.string.dlg_attached_video_last_message))) {
+                    //displayAttachImage(messageCache.getAttachUrl(), viewHolder, messageCache.getMessage());
+                    showVideo(messageCache.getAttachUrl(), viewHolder);
+                }
             } else {
                 setViewVisibility(viewHolder.textMessageView, View.VISIBLE);
                 viewHolder.timeTextMessageTextView.setText(DateUtils.longToMessageDate(messageCache.getTime()));
@@ -159,7 +166,7 @@ public class GroupDialogMessagesAdapter extends BaseDialogMessagesAdapter {
 //            messageCache.setRead(true);
 //            QBUpdateStatusMessageCommand.start(context, dialog, messageCache, false);
 //        }
-        viewHolder.messageTextView.setOnLongClickListener(new View.OnLongClickListener() {
+        viewHolder.textMessageView.setOnLongClickListener(new View.OnLongClickListener() {
 
             @Override
             public boolean onLongClick(View v) {

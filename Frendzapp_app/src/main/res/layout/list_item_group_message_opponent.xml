@@ -30,18 +30,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:id="@+id/linear_opponent">
 
             <include layout="@layout/view_chat_progress_bars" />
 
             <GridLayout
+
                 android:id="@+id/text_message_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/chat_babble_margin"
                 android:background="@drawable/left_bubble"
                 android:orientation="vertical"
-                android:padding="5dp"
+                android:padding="0dp"
                 android:columnCount="1">
 
                 <LinearLayout
@@ -62,13 +64,15 @@
                         android:textColor="@color/blue"
                         android:textSize="@dimen/text_size"
                         android:textStyle="bold"
-                        android:gravity="left" />
+                        android:gravity="left"
+                        />
 
                     <TextView
                         android:id="@+id/time_text_message_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:alpha="0.5"
+                        android:layout_marginTop="5dp"
                         android:paddingRight="7dp"
                         android:singleLine="true"
                         android:paddingTop="3dp"
@@ -84,6 +88,8 @@
                     android:layout_gravity="center|left"
                     android:paddingLeft="10dp"
                     android:paddingRight="5dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginBottom="5dp"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_small"
                     emojicon:emojiconSize="@dimen/chat_emoji_item_preview_size" />

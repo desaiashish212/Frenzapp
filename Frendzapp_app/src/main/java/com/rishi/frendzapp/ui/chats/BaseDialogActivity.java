@@ -28,6 +28,7 @@ import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -372,7 +373,9 @@ public abstract class BaseDialogActivity extends BaseFragmentActivity implements
              @Override
              public void onClick(View v) {
                  Toast.makeText(BaseDialogActivity.this,"Feture Not Available",Toast.LENGTH_LONG).show();
+                 imageUtils.getAudio();
                  pwindo.dismiss();
+
              }
          });
 
@@ -449,6 +452,7 @@ public abstract class BaseDialogActivity extends BaseFragmentActivity implements
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        System.out.println("In if requestCode:"+requestCode);
         canPerformLogout.set(true);
         if ((isGalleryCalled(requestCode) || isCaptureCalled(requestCode)) && resultCode == RESULT_OK) {
             isNeedToScrollMessages = true;
@@ -457,7 +461,7 @@ public abstract class BaseDialogActivity extends BaseFragmentActivity implements
             } else {
                 onFileSelected(data.getData());
             }
-        }else  if (resultCode == RESULT_OK) {
+        }else  if (resultCode == RESULT_OK && requestCode == ImageUtils.GALLERY_INTENT_VIDEO) {
             if (requestCode == ImageUtils.GALLERY_INTENT_VIDEO) {
                 Uri selectedImageUri = data.getData();
 
@@ -469,7 +473,23 @@ public abstract class BaseDialogActivity extends BaseFragmentActivity implements
                     File uploadfile = new File(selectedImagePath);
                     if (uploadfile.exists()){
 
-                        getQbfile(uploadfile);
+                        getVideoQbfile(uploadfile);
+
+                    }
+                }
+            }
+        }else if (resultCode == RESULT_OK && requestCode==ImageUtils.AUDIO_INTENT_CALLED){
+            System.out.println("In if audio");
+            System.out.println("requestCode:"+requestCode);
+            if (requestCode==ImageUtils.AUDIO_INTENT_CALLED){
+                Uri selectedAudioUri = data.getData();
+                System.out.println("In audio");
+                String selectedAudioPath = getPath(selectedAudioUri);
+                if (selectedAudioPath != null) {
+                    File uploadfile = new File(selectedAudioPath);
+                    if (uploadfile.exists()){
+
+                        getAudioQbfile(uploadfile);
 
                     }
                 }
@@ -491,7 +511,7 @@ public abstract class BaseDialogActivity extends BaseFragmentActivity implements
         } else
             return null;
     }
-    public  void getQbfile(final File file){
+    public  void getVideoQbfile(final File file){
         showProgress();
         try {
             Thread thread = new Thread(new Runnable(){
@@ -518,6 +538,35 @@ public abstract class BaseDialogActivity extends BaseFragmentActivity implements
         e.printStackTrace();
     }
     }
+
+    public  void getAudioQbfile(final File file){
+        showProgress();
+        try {
+            Thread thread = new Thread(new Runnable(){
+                @Override
+                public void run() {
+
+                    try {
+                        QBAuthHelper authHelper = new QBAuthHelper(getApplicationContext());
+                        QBFile qbFile= authHelper.uploadAudio(file);
+
+                        ((QBPrivateChatHelper) baseChatHelper).sendPrivateMessageWithAttachAudio(qbFile,
+                                opponentFriend.getUserId());
+                        hideProgress();
+                    }catch (QBResponseException exc) {
+                        ErrorUtils.showError(getApplicationContext(), exc);
+                    }
+                }
+            });
+
+            thread.start();
+//            QBAuthHelper authHelper = new QBAuthHelper(getApplicationContext());
+//            qbFile= authHelper.uploadVideo(file);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -583,6 +632,7 @@ public abstract class BaseDialogActivity extends BaseFragmentActivity implements
         int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
         return cursor.getString(idx);
     }
+
 
     private boolean isGalleryCalled(int requestCode) {
         return ImageUtils.GALLERY_INTENT_CALLED == requestCode;
@@ -705,6 +755,16 @@ public abstract class BaseDialogActivity extends BaseFragmentActivity implements
         messageTypingBoxImageView = _findViewById(R.id.message_typing_box_imageview);
         messageTypingAnimationDrawable = (AnimationDrawable) messageTypingBoxImageView.getDrawable();
         messagesListView.setOnScrollListener(this);
+        if (getSend()){
+            messageEditText.setImeOptions(EditorInfo.IME_ACTION_SEND);
+        }else {
+            messageEditText.setImeOptions(EditorInfo.IME_FLAG_NO_ENTER_ACTION);
+        }
+
+    }
+
+    private boolean getSend() {
+        return PrefsHelper.getPrefsHelper().getPref(PrefsHelper.PREF_IS_SEND_CHACKED, false);
     }
 
     @Override
@@ -860,6 +920,19 @@ public abstract class BaseDialogActivity extends BaseFragmentActivity implements
                     }
                     checkStopTyping();
                 }
+            }
+        });
+
+        messageEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_SEND) {
+                    sendMessage(true);
+                  //  Toast.makeText(getApplicationContext(),"send",Toast.LENGTH_SHORT);
+                    handled = true;
+                }
+                return handled;
             }
         });
 

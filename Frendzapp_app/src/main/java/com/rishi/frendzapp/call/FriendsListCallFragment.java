@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.PopupWindow;
@@ -505,13 +506,16 @@ public class FriendsListCallFragment extends BaseFragment implements SearchView.
     private PopupWindow pwindo;
 
     private void initiatePopupWindow(final User user) {
-        LinearLayout videoCall;
-        LinearLayout voiceCall;
+//        LinearLayout videoCall;
+//        LinearLayout voiceCall;
+        ImageView videoCall;
+        ImageView voiceCall;
+
         try {
 // We need to get the instance of the LayoutInflater
             LayoutInflater inflater = (LayoutInflater) baseActivity
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View layout = inflater.inflate(R.layout.view_call_popup,null);
+            View layout = inflater.inflate(R.layout.view_call_popup_one,null);
             pwindo = new PopupWindow(layout,ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT);
             pwindo.setOutsideTouchable(true);
@@ -520,8 +524,11 @@ public class FriendsListCallFragment extends BaseFragment implements SearchView.
             pwindo.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             pwindo.showAtLocation(layout, Gravity.CENTER, 0, 0);
             // Removes default background.
-            videoCall = (LinearLayout) layout.findViewById(R.id.linearLayout_video_call);
-            voiceCall = (LinearLayout) layout.findViewById(R.id.linearLayout_voice_call);
+//            videoCall = (LinearLayout) layout.findViewById(R.id.linearLayout_video_call);
+//            voiceCall = (LinearLayout) layout.findViewById(R.id.linearLayout_voice_call);
+            videoCall = (ImageView) layout.findViewById(R.id.btn_video_call);
+            voiceCall = (ImageView) layout.findViewById(R.id.btn_voice_call);
+
 
 
             voiceCall.setOnClickListener(new View.OnClickListener() {

@@ -47,6 +47,10 @@ public class PrefsHelper {
     public static final String PREF_NOTIFICATION_VIBRATE = "notification_vibrate";
 
     public static final String PREF_APPLOCK_PASS = "app_lock_pass";
+    public static final String PREF_IMAGE = "image";
+    public static final String PREF_AUDIO = "audios";
+    public static final String PREF_VIDEOS = "videos";
+    public static final String PREF_DOCUMENTS = "documents";
 
     private final SharedPreferences sharedPreferences;
     private final SharedPreferences.Editor editor;
@@ -63,7 +67,10 @@ public class PrefsHelper {
         sharedPreferences = context.getSharedPreferences(prefsFile, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
     }
-
+    public void delete() {
+        editor.clear();
+        editor.commit();
+    }
     public void delete(String key) {
         if (sharedPreferences.contains(key)) {
             editor.remove(key).commit();

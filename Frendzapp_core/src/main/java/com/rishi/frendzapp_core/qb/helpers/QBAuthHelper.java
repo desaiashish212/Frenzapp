@@ -163,6 +163,13 @@ public class QBAuthHelper extends BaseHelper {
         return qbFile;
     }
 
+    public QBFile uploadAudio(File file) throws QBResponseException {
+
+        QBFile qbFile = QBContent.uploadFileTask(file, true, (String) null);
+
+        return qbFile;
+    }
+
     // TODO: temp method
     private UserCustomData getUserCustomData(QBUser user) {
         if (TextUtils.isEmpty(user.getCustomData())) {

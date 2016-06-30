@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:background="@drawable/layout_bg"
+                android:padding="@dimen/margin_10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
+
+                <TextView
+
+                    android:padding="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="DELETING YOUR ACCOUNT WILL:"
+                    android:textColor="@color/red"
+                    android:textSize="14sp"/>
+
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+
+                    android:paddingLeft="10dp">
+                    <View
+                        android:layout_gravity="center"
+                        android:background="@color/gray"
+                        android:layout_width="5dp"
+
+                        android:layout_height="5dp"/>
+                    <TextView
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:padding="5dp"
+
+                        android:textColor="@color/gray"
+                        android:text="Delete your account from FrendzApp"
+                        />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp">
+                    <View
+                        android:layout_gravity="center"
+                        android:background="@color/gray"
+                        android:layout_width="5dp"
+
+                        android:layout_height="5dp"/>
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:paddingLeft="5dp"
+
+                        android:textColor="@color/gray"
+                        android:text="Erase your message history"
+                        />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp">
+                    <View
+                        android:layout_gravity="center"
+                        android:background="@color/gray"
+                        android:layout_width="5dp"
+
+                        android:layout_height="5dp"/>
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:padding="5dp"
+
+                        android:textColor="@color/gray"
+                        android:text="Delete you from all of your FrendzApp groups"
+                        />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp">
+                    <View
+                        android:layout_gravity="center"
+                        android:background="@color/gray"
+                        android:layout_width="5dp"
+
+                        android:layout_height="5dp"/>
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:paddingLeft="5dp"
+                        android:paddingBottom="5dp"
+
+                        android:textColor="@color/gray"
+                        android:text="Delete your google drive backup"
+                        />
+
+                </LinearLayout>
+
+
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+
+                android:background="@drawable/layout_bg"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:padding="10dp"
+
+
+                        android:textColor="@color/gray"
+                        android:text="To delete your account,Confrm your country code and enter your phone number"
+                        />
+
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/txt_country_code"
+                            android:padding="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:textSize="18dp"/>
+                        <EditText
+                            android:id="@+id/et_mobileNo"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:inputType="phone"
+                            />
+
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/btn_delet_account"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="20dp"
+                        android:textSize="12dp"
+                        android:textStyle="bold"
+                        android:background="@color/red"
+                        android:textColor="@color/white"
+                        android:text="DELETE MY ACCOUNT"/>
+
+
+
+                </LinearLayout>
+
+
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+
+</LinearLayout>

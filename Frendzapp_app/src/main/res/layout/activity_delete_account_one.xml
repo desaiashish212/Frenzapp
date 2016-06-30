@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:background="@drawable/layout_bg"
+                android:padding="@dimen/margin_10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
+
+                <TextView
+
+                    android:padding="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="We have to see you go!Why are you leaving?\n(Feedback is optional) "
+                    android:textColor="@color/green"
+                    android:textSize="14sp"/>
+
+
+
+
+
+                <!-- Spinner Element -->
+                <Spinner
+                    android:id="@+id/planets_spinner"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" />
+
+                <EditText
+                    android:layout_marginTop="10dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/edit_we_can_improve"
+                    android:hint="Tell us how we can improve"
+                    android:paddingLeft="10dp"
+                    />
+                <Button
+
+                    android:id="@+id/btn_delet_account"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
+                    android:background="@color/red"
+                    android:textColor="@color/white"
+                    android:text="DELETE MY ACCOUNT"/>
+
+
+
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+
+</LinearLayout>

@@ -28,6 +28,7 @@ import com.quickblox.videochat.webrtc.QBRTCTypes;
 import com.quickblox.videochat.webrtc.view.QBGLVideoView;
 import com.quickblox.videochat.webrtc.view.QBRTCVideoTrack;
 import com.quickblox.videochat.webrtc.view.VideoCallBacks;
+import com.rishi.frendzapp_core.utils.PrefsHelper;
 
 import org.webrtc.VideoRenderer;
 
@@ -485,7 +486,9 @@ public class CallActivity extends BaseLogeableActivity implements IncomingCallAc
         setCurrentFragment(outgoingCallFragment);
 
     }
-
+    private boolean getMute() {
+        return !PrefsHelper.getPrefsHelper().getPref(PrefsHelper.PREF_PUSH_NOTIFICATIONS, false);
+    }
     private void showIncomingFragment() {
         Log.d(CALL_INTEGRATION, "CallActivity. showIncomingFragment");
         playIncomingRingtone();
@@ -506,7 +509,7 @@ public class CallActivity extends BaseLogeableActivity implements IncomingCallAc
     // --------------- Manage call ringtones ------------ //
     private void playOutgoingRingtone() {
         if (mediaPlayer != null) {
-            mediaPlayer.playSound("calling.mp3", true);
+            mediaPlayer.playSound("calling.mp3", true,false);
         }
     }
 
@@ -608,7 +611,10 @@ public class CallActivity extends BaseLogeableActivity implements IncomingCallAc
 
             if (call_direction_type != null) {
                 if (ConstsCore.CALL_DIRECTION_TYPE.INCOMING.equals(call_direction_type)) {
+                    if (getMute())
                     showIncomingFragment();
+                    else
+                      finish();
                 } else {
                     notifyFriendOnCall(opponent);
                     showOutgoingFragment();

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rishi.frendzapp.R;
@@ -27,6 +28,7 @@ public class EventAdapter extends BaseAdapter {
     private List<User> listData;
     private String databaseDateFormat = getDatabaseDateFormat();
     private  String diff;
+    int pos;
 
     public EventAdapter(Context context, List<User> listData) {
         this.context = context;
@@ -63,9 +65,9 @@ public class EventAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View view, ViewGroup viewGroup) {
+    public View getView(final int position, View view, ViewGroup viewGroup) {
         ViewHolder viewHolder = null;
-
+         pos=position;
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.list_item_birthday, null);
@@ -99,7 +101,8 @@ public class EventAdapter extends BaseAdapter {
         view.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void onClick(View arg0) {
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(), "Clicked on the position"+position, Toast.LENGTH_SHORT).show();
                 boolean isFriend = UsersDatabaseManager.isFriendInBaseWithPending(context,
                         user.getUserId());
                 if (isFriend) {

@@ -20,6 +20,7 @@ import com.rishi.frendzapp.ui.friends.FriendsListFragment;
 import com.rishi.frendzapp.ui.main.MainActivity;
 import com.rishi.frendzapp.ui.offer.OfferActivity;
 import com.rishi.frendzapp.ui.profile.Profile;
+import com.rishi.frendzapp.ui.profile.ProfileActivity;
 import com.rishi.frendzapp.ui.selfiemode.SelfieModeActivity;
 
 public class HomeFragment extends BaseFragment {

@@ -46,7 +46,7 @@
             <EditText
                 android:id="@+id/passcode_1"
               android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:textColor="@color/badge_participants_counter_color"
                 android:gravity="center"
                 android:inputType="numberPassword"
@@ -61,7 +61,7 @@
             <EditText
                 android:id="@+id/passcode_2"
                 android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:textColor="@color/badge_participants_counter_color"
                 android:gravity="center"
                 android:textSize="40dp"
@@ -73,7 +73,7 @@
             <EditText
                 android:id="@+id/passcode_3"
                 android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:textColor="@color/badge_participants_counter_color"
                 android:layout_marginRight="10dp"
                 android:gravity="center"
@@ -85,7 +85,7 @@
             <EditText
                 android:id="@+id/passcode_4"
                 android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:textColor="@color/black"
                 android:gravity="center"
                 android:textSize="40dp"

@@ -41,12 +41,18 @@ import java.util.Date;
 import java.util.Locale;
 
 public class SelfieModeActivity extends BaseActivity implements ReceiveFileFromBitmapTask.ReceiveFileListener, ReceiveUriScaledBitmapTask.ReceiveUriScaledBitmapListener{
+
+	private final Context mContext = this;
+
+	float angle=90;
+
+
 	private ImageButton btnRotate;
 	private ImageView imageView;
 	private ImageView cropImage;
 	private Bitmap bitmap;
 	private Bitmap avatarBitmapCurrent;
-	private float angle=0;
+
 	private ImageUtils imageUtils;
 	private View actionCancelView;
 	private View actionDoneView;
@@ -58,6 +64,8 @@ public class SelfieModeActivity extends BaseActivity implements ReceiveFileFromB
 	private Intent data;
 	private Uri mFileUri;
 
+
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -68,25 +76,36 @@ public class SelfieModeActivity extends BaseActivity implements ReceiveFileFromB
 		//imageUtils.getCaptureImage();
 		imageUtils = new ImageUtils(this);
 
-		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		mFileUri = getOutputMediaFileUri(1);
-		intent.putExtra(MediaStore.EXTRA_OUTPUT, mFileUri);
-		startActivityForResult(intent, ImageUtils.CAPTURE_INTENT_CALLED);
-	}
 
+
+
+		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		intent.putExtra("android.intent.extras.CAMERA_FACING", 1);
+
+		mFileUri = getOutputMediaFileUri(1);
+
+
+		intent.putExtra(MediaStore.EXTRA_OUTPUT, mFileUri);
+
+
+		startActivityForResult(intent, 100);
+
+	}
 	public void init(){
 		btnRotate = _findViewById(R.id.btn_rotate);
-		imageView = (ImageView) findViewById(R.id.result_image);
+
 		cropImage = (ImageView) findViewById(R.id.crop_image);
 		imageUtils = new ImageUtils(this);
 		actionView = _findViewById(R.id.action_view);
 		actionCancelView = _findViewById(R.id.action_cancel_view);
 		actionDoneView = _findViewById(R.id.action_done_view);
+		btnRotate = (ImageButton)findViewById(R.id.btn_rotate);
+		imageView = (ImageView) findViewById(R.id.result_image );
 		hideAction();
 	}
 
 	public void  initListener(){
-		btnRotate.setOnClickListener(new OnClickListener() {
+		btnRotate.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				angle += 90;
@@ -95,13 +114,13 @@ public class SelfieModeActivity extends BaseActivity implements ReceiveFileFromB
 			}
 		});
 
-		actionCancelView.setOnClickListener(new OnClickListener() {
+		actionCancelView.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				hideAction();
 			}
 		});
 
-		actionDoneView.setOnClickListener(new OnClickListener() {
+		actionDoneView.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				updateUserData();
 			}
@@ -112,6 +131,87 @@ public class SelfieModeActivity extends BaseActivity implements ReceiveFileFromB
 		addAction(QBServiceConsts.UPDATE_USER_SUCCESS_ACTION, new UpdateUserSuccessAction());
 		addAction(QBServiceConsts.UPDATE_USER_FAIL_ACTION, new UpdateUserFailAction());
 	}
+
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
+		super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
+
+		if (resultCode == RESULT_OK) {
+			if (mFileUri != null) {
+				String mFilePath = mFileUri.toString();
+				if (mFilePath != null) {
+
+
+//                    Intent intent = new Intent(mContext, SelfimodeActivity_Second.class);
+//                    intent.putExtra("filepath", mFilePath);
+//                    startActivity(intent);
+					setImage(mFilePath);
+				}
+			}
+		}
+		else if(imageReturnedIntent==null)
+		{
+			finish();
+		}
+
+	}
+	public void setImage(String filepath)
+	{
+		filepath = filepath.replace("file://", ""); // remove to avoid BitmapFactory.decodeFile return null
+		File imgFile = new File(filepath);
+		if (imgFile.exists())
+		{
+			//
+
+			int rotate = 0;
+			try {
+				File imageFile = new File(filepath);
+				ExifInterface exif = new ExifInterface(
+						imageFile.getAbsolutePath());
+				int orientation = exif.getAttributeInt(
+						ExifInterface.TAG_ORIENTATION,
+						ExifInterface.ORIENTATION_NORMAL);
+
+				switch (orientation) {
+					case ExifInterface.ORIENTATION_ROTATE_270:
+						rotate = 270;
+						break;
+					case ExifInterface.ORIENTATION_ROTATE_180:
+						rotate = 180;
+						break;
+					case ExifInterface.ORIENTATION_ROTATE_90:
+						rotate = 90;
+						break;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			Matrix matrix = new Matrix();
+			matrix.postRotate(rotate);
+			bitmap= BitmapFactory.decodeFile(imgFile.getAbsolutePath(), null);
+			bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+
+
+
+
+
+			//below code is used to save image in camera folder
+
+			Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+			File f = new File(filepath);
+			Uri contentUri = Uri.fromFile(f);
+			mediaScanIntent.setData(contentUri);
+			this.sendBroadcast(mediaScanIntent);
+
+			// set image to the imageview
+			imageView.setImageBitmap(bitmap);
+
+		}
+	}
+
+
 
 	private Uri getOutputMediaFileUri(int type) {
 		return Uri.fromFile(getOutputMediaFile(type));
@@ -150,112 +250,6 @@ public class SelfieModeActivity extends BaseActivity implements ReceiveFileFromB
 		return Bitmap.createBitmap(sourceImage, 0, 0, sourceImage.getWidth(), sourceImage.getHeight(), matrix, true);
 	}
 
-	public Uri getImageUri(Context inContext, Bitmap inImage) {
-		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-		inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-		String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-		return Uri.parse(path);
-	}
-
-	public String getRealPathFromURI(Uri uri) {
-		Cursor cursor = getContentResolver().query(uri, null, null, null, null);
-		cursor.moveToFirst();
-		int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-		return cursor.getString(idx);
-	}
-
-	private void updateUserData() {
-		System.out.println("In updateUserData");
-
-			saveChanges();
-
-	}
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		System.out.println("In onActivityResult");
-		if (requestCode == Crop.REQUEST_CROP) {
-			System.out.println("In REQUEST_CROP");
-			handleCrop(resultCode, data);
-		}else {
-			if (mFileUri != null ) {
-				String mFilePath = mFileUri.toString();
-				if (mFilePath != null) {
-					setImage(mFilePath);
-				}
-				//bitmap = (Bitmap) data.getExtras().get("data");
-				tempUri = getImageUri(this, bitmap);
-				//imageView.setImageBitmap(photo);
-				this.requestCode = requestCode;
-				this.resultCode = resultCode;
-				this.data = data;
-			}else {
-				setResult(BaseActivity.RESULT_CANCELED);
-				finish();
-			}
-
-		}
-		super.onActivityResult(requestCode, resultCode, data);
-	}
-
-
-	public void setImage(String filepath) {
-		filepath = filepath.replace("file://", ""); // remove to avoid BitmapFactory.decodeFile return null
-		File imgFile = new File(filepath);
-		if (imgFile.exists()) {
-			//
-			int rotate = 0;
-			try {
-				File imageFile = new File(getRealPathFromURI(tempUri));
-				ExifInterface exif = new ExifInterface(
-						imageFile.getAbsolutePath());
-				int orientation = exif.getAttributeInt(
-						ExifInterface.TAG_ORIENTATION,
-						ExifInterface.ORIENTATION_NORMAL);
-
-				switch (orientation) {
-					case ExifInterface.ORIENTATION_ROTATE_270:
-						rotate = 270;
-						break;
-					case ExifInterface.ORIENTATION_ROTATE_180:
-						rotate = 180;
-						break;
-					case ExifInterface.ORIENTATION_ROTATE_90:
-						rotate = 90;
-						break;
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			Matrix matrix = new Matrix();
-			matrix.postRotate(rotate);
-			bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath(), null);
-			bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-			imageView.setImageBitmap(bitmap);
-
-		}
-	}
-	private void saveChanges() {
-		showProgress();
-
-		//QBUser newUser = createUserForUpdating();
-
-		new ReceiveFileFromBitmapTask(this).execute(imageUtils, avatarBitmapCurrent, true);
-
-	}
-
-	private void handleCrop(int resultCode, Intent result) {
-		System.out.println("In handleCrop");
-		if (resultCode == RESULT_OK) {
-			//isNeedUpdateAvatar = true;
-			avatarBitmapCurrent = imageUtils.getBitmap(outputUri);
-			cropImage.setVisibility(View.VISIBLE);
-			cropImage.setImageBitmap(avatarBitmapCurrent);
-			showAction();
-		} else if (resultCode == Crop.RESULT_ERROR) {
-			DialogUtils.showLong(this, Crop.getError(result).getMessage());
-		}
-	}
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
@@ -287,12 +281,25 @@ public class SelfieModeActivity extends BaseActivity implements ReceiveFileFromB
 			// action with ID action_settings was selected
 			case R.id.action_share:
 				//Toast.makeText(this, "You clicked on Share", Toast.LENGTH_SHORT)	.show();
-				ShareActivity.start(SelfieModeActivity.this,mFileUri.toString());
+				ShareActivity.start(SelfieModeActivity.this, mFileUri.toString());
 				break;
 			default:
 				break;
 		}
 		return true;
+	}
+
+	private void handleCrop(int resultCode, Intent result) {
+		System.out.println("In handleCrop");
+		if (resultCode == RESULT_OK) {
+			//isNeedUpdateAvatar = true;
+			avatarBitmapCurrent = imageUtils.getBitmap(outputUri);
+			cropImage.setVisibility(View.VISIBLE);
+			cropImage.setImageBitmap(avatarBitmapCurrent);
+			showAction();
+		} else if (resultCode == Crop.RESULT_ERROR) {
+			DialogUtils.showLong(this, Crop.getError(result).getMessage());
+		}
 	}
 
 	private void showAction() {
@@ -302,6 +309,14 @@ public class SelfieModeActivity extends BaseActivity implements ReceiveFileFromB
 	private void hideAction() {
 		actionView.setVisibility(View.GONE);
 	}
+
+	public Uri getImageUri(Context inContext, Bitmap inImage) {
+		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+		inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+		String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+		return Uri.parse(path);
+	}
+
 
 	@Override
 	public void onCachedImageFileReceived(File imageFile) {
@@ -321,27 +336,22 @@ public class SelfieModeActivity extends BaseActivity implements ReceiveFileFromB
 		hideProgress();
 		startCropActivity(originalUri);
 	}
-
-	private void startCropActivity(Uri originalUri) {
-		System.out.println("In startCropActivity");
-		outputUri = Uri.fromFile(new File(getCacheDir(), Crop.class.getName()));
-		new Crop(originalUri).output(outputUri).asSquare().start(this);
-	}
-
 	private QBUser createUserForUpdating() {
 		QBUser newUser = new QBUser();
 		newUser.setId(AppSession.getSession().getUser().getId());
 		return newUser;
 	}
 
-	public class UpdateUserFailAction implements Command {
+	private void startCropActivity(Uri originalUri) {
+		System.out.println("In startCropActivity");
+		outputUri = Uri.fromFile(new File(getCacheDir(), Crop.class.getName()));
+		new Crop(originalUri).output(outputUri).asSquare().start(this);
+	}
+	private void updateUserData() {
+		System.out.println("In updateUserData");
 
-		@Override
-		public void execute(Bundle bundle) {
-			Exception exception = (Exception) bundle.getSerializable(QBServiceConsts.EXTRA_ERROR);
-			DialogUtils.showLong(SelfieModeActivity.this, exception.getMessage());
-			hideProgress();
-		}
+		saveChanges();
+
 	}
 
 	private class UpdateUserSuccessAction implements Command {
@@ -362,10 +372,24 @@ public class SelfieModeActivity extends BaseActivity implements ReceiveFileFromB
 		}
 	}
 
-	@Override
-	public void onBackPressed() {
-		super.onBackPressed();
-		setResult(BaseActivity.RESULT_CANCELED);
-		finish();
+	private void saveChanges() {
+		showProgress();
+
+		//QBUser newUser = createUserForUpdating();
+
+		new ReceiveFileFromBitmapTask(this).execute(imageUtils, avatarBitmapCurrent, true);
+
+	}
+
+	public class UpdateUserFailAction implements Command {
+
+		@Override
+		public void execute(Bundle bundle) {
+			Exception exception = (Exception) bundle.getSerializable(QBServiceConsts.EXTRA_ERROR);
+			DialogUtils.showLong(SelfieModeActivity.this, exception.getMessage());
+			hideProgress();
+		}
 	}
 }
+
+

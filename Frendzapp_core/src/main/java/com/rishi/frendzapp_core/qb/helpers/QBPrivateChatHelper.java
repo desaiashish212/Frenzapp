@@ -58,12 +58,26 @@ public class QBPrivateChatHelper extends QBBaseChatHelper {
     }
 
     public void sendPrivateMessageWithAttachVideo(QBFile file, int userId) throws QBResponseException {
-        sendPrivateMessageVideo(file, context.getString(R.string.dlg_attached_last_message), userId);
+        sendPrivateMessageVideo(file, context.getString(R.string.dlg_attached_video_last_message), userId);
     }
 
     private void sendPrivateMessageVideo(QBFile file, String message, int userId) throws QBResponseException {
         QBChatMessage chatMessage;
         chatMessage = getQBChatMessageVideo(message, file);
+        String dialogId = null;
+        if (currentDialog != null) {
+            dialogId = currentDialog.getDialogId();
+        }
+        sendPrivateMessage(chatMessage, userId, dialogId);
+    }
+
+    public void sendPrivateMessageWithAttachAudio(QBFile file, int userId) throws QBResponseException {
+        sendPrivateMessageAudio(file, context.getString(R.string.dlg_attached_audio_last_message), userId);
+    }
+
+    private void sendPrivateMessageAudio(QBFile file, String message, int userId) throws QBResponseException {
+        QBChatMessage chatMessage;
+        chatMessage = getQBChatMessageAudio(message, file);
         String dialogId = null;
         if (currentDialog != null) {
             dialogId = currentDialog.getDialogId();

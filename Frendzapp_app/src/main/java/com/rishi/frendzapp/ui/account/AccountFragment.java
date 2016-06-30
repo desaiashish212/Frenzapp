@@ -37,7 +37,8 @@ public class AccountFragment extends BaseFragment {
         linear_two.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(),"you clicked on the delete",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(),"you clicked on the delete",Toast.LENGTH_SHORT).show();
+                AccountDeleteActivity.start(baseActivity);
             }
         });
 

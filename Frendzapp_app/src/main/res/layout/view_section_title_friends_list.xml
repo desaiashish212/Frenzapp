@@ -13,7 +13,5 @@
         android:layout_marginTop="5dp"
         android:text="@string/frl_friends"
         android:textColor="@color/wallet_bright_foreground_holo_dark"
-
-
         />
 </LinearLayout>

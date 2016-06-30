@@ -184,7 +184,6 @@ public class OtpVerificationActivity extends Activity {
     public void initiatePopupWindow() {
         TextView txtOk;
         try {
-// We need to get the instance of the LayoutInflater
             DisplayMetrics metrics = this.getResources().getDisplayMetrics();
             int width = metrics.widthPixels;
             int height = metrics.heightPixels;

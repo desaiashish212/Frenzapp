@@ -1,6 +1,5 @@
 package com.rishi.frendzapp.ui.offer;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -11,13 +10,11 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -29,38 +26,31 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.internal.fa;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 import com.quickblox.core.QBEntityCallback;
-import com.quickblox.core.QBEntityCallbackImpl;
 import com.quickblox.core.exception.QBResponseException;
 import com.quickblox.core.request.QBRequestUpdateBuilder;
 import com.quickblox.core.server.BaseService;
 import com.quickblox.customobjects.QBCustomObjects;
 import com.quickblox.customobjects.model.QBCustomObject;
 import com.rishi.frendzapp.R;
+import com.rishi.frendzapp.chat.ChatsFragment;
 import com.rishi.frendzapp.custome.activity.DisplayNoteListActivity;
-import com.rishi.frendzapp.custome.helper.CategoryDataHoler;
-import com.rishi.frendzapp.custome.helper.DataHolder;
 import com.rishi.frendzapp.custome.helper.OfferDataHolder;
 import com.rishi.frendzapp.custome.utils.DialogUtils;
 import com.rishi.frendzapp.ui.base.BaseActivity;
 import com.rishi.frendzapp.utils.Consts;
-import com.rishi.frendzapp.utils.ReceiveFileFromBitmapTask;
 import com.rishi.frendzapp_core.models.AppSession;
 import com.rishi.frendzapp_core.service.QBServiceConsts;
-import com.rishi.frendzapp_core.utils.ConstsCore;
 import com.rishi.frendzapp_core.utils.PrefsHelper;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -107,6 +97,7 @@ public class SinglePageActivity extends BaseActivity {
     private ImageButton btn_comment;
     ViewPager viewPager;
     ImagePagerAdapter adapter;
+    String[] ary;
 
     private final String POSITION = "position";
     private int position;
@@ -114,7 +105,9 @@ public class SinglePageActivity extends BaseActivity {
     private TextView txt_titleComment;
 
     private String[] image_Array=new String[5];
-
+    ChatsFragment chatsFragment;
+    PrefsHelper helper;
+    ListView myListView;
 
     public static void start(Context context, int position) {
         Intent intent = new Intent(context, SinglePageActivity.class);
@@ -127,10 +120,33 @@ public class SinglePageActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         position = getIntent().getExtras().getInt(QBServiceConsts.EXTRA_ITEM_POSITION);
         setContentView(R.layout.activity_single_page);
+        helper = new PrefsHelper(this);
+        CheckBox chk_enter_is_send=(CheckBox)findViewById(R.id.chk_enter_is_send);
+        // This disables screen shot to be taken for current activity
+       // getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+
 
         init();
         initListener();
         InputMethodManager im = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+
+//        if (helper.isPrefExists(PrefsHelper.PREF_ENETR_IS_SEND))
+//        {
+//            if (helper.getPref(PrefsHelper.PREF_ENETR_IS_SEND)){
+//                chk_enter_is_send.setChecked(true);
+//                //et_Comment.setImeOptions(EditorInfo.IME_ACTION_SEND);
+//            }
+//            else {
+//                chk_enter_is_send.setChecked(false);
+//            }
+//        }
+//        if(chk_enter_is_send.isChecked())
+//        {
+//            et_Comment.setImeOptions(EditorInfo.IME_ACTION_SEND);
+//        }
+
+
+
         im.showSoftInput(et_Comment, 0);
         fillFields();
         updateViews();
@@ -172,12 +188,13 @@ public class SinglePageActivity extends BaseActivity {
         txtShopName = (TextView) findViewById(R.id.txt_shopName);
         txtShopAddress = (TextView) findViewById(R.id.txt_shopAddress);
         txtContactPerson = (TextView) findViewById(R.id.txt_contactPerson);
-       // txtMobile1 = (TextView) findViewById(R.id.txt_mobile1);
-      //  txtMobile2 = (TextView) findViewById(R.id.txt_mobile2);
+
 
         txtCalOffer = (TextView) findViewById(R.id.txt_callOffer);
         txtViewComment=(TextView) findViewById(R.id.txtViewComment);
+
         txtComment=(TextView) findViewById(R.id.txtComment);
+
         et_Comment=(EditText)findViewById(R.id.et_Comment);
         linear_view_Comment_List=(LinearLayout)findViewById(R.id.linear_view_Comment_List);
         linear_et_Comment=(LinearLayout)findViewById(R.id.linear_et_Comment);
@@ -314,6 +331,7 @@ public class SinglePageActivity extends BaseActivity {
         txtComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 comment_view.setVisibility(View.GONE);
                 txt_titleComment.setVisibility(View.GONE);
                 view_Comment_List.setVisibility(View.GONE);
@@ -326,6 +344,7 @@ public class SinglePageActivity extends BaseActivity {
         btn_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 createNewNote();
             }
         });
@@ -369,11 +388,11 @@ public class SinglePageActivity extends BaseActivity {
         applyProductImage4(ivMain4, position);
         applyProductImage5(ivMain5, position);
 
-        image_Array[0]=OfferDataHolder.getOfferDataHolder().getOfferProductImage1(position);
-        image_Array[1]=OfferDataHolder.getOfferDataHolder().getOfferProductImage2(position);
-        image_Array[2]=OfferDataHolder.getOfferDataHolder().getOfferProductImage3(position);
-        image_Array[3]=OfferDataHolder.getOfferDataHolder().getOfferProductImage4(position);
-        image_Array[4]=OfferDataHolder.getOfferDataHolder().getOfferProductImage5(position);
+        image_Array[0]= OfferDataHolder.getOfferDataHolder().getOfferProductImage1(position);
+        image_Array[1]= OfferDataHolder.getOfferDataHolder().getOfferProductImage2(position);
+        image_Array[2]= OfferDataHolder.getOfferDataHolder().getOfferProductImage3(position);
+        image_Array[3]= OfferDataHolder.getOfferDataHolder().getOfferProductImage4(position);
+        image_Array[4]= OfferDataHolder.getOfferDataHolder().getOfferProductImage5(position);
         viewPager.setAdapter(adapter);
         applyComment();
 
@@ -398,11 +417,16 @@ public class SinglePageActivity extends BaseActivity {
 
 
 
-        String[] ary = commentsStr.split(",");
+         ary = commentsStr.split(",");
 
         ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(SinglePageActivity.this,
                 android.R.layout.simple_list_item_1, ary);
-        view_Comment_List.setAdapter(adapter1);
+       // view_Comment_List.setAdapter(adapter1);
+
+        myListView = view_Comment_List;
+        myListView.setAdapter(adapter1);
+
+        adapter1.notifyDataSetChanged();
         setListViewHeightBasedOnChildren(view_Comment_List);
 
         System.out.println(ary.toString() + "......" + ary.length);
@@ -748,9 +772,11 @@ public class SinglePageActivity extends BaseActivity {
         // create new score in activity_note class
 
         String user = AppSession.getSession().getUser().getFullName();
+
         String comments = et_Comment.getText().toString();
 
         if(!isValidData(user, comments)) {
+
             DialogUtils.showLong(this,"please enter comment");
             return;
         }
@@ -773,8 +799,10 @@ public class SinglePageActivity extends BaseActivity {
             public void onSuccess(QBCustomObject object, Bundle params) {
 
                 System.out.println("Comment added successfully");
+
                 et_Comment.setText("");
                 Toast.makeText(SinglePageActivity.this,"Comment added successfully",Toast.LENGTH_SHORT).show();
+
 
             }
 

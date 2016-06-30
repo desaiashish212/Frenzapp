@@ -1,5 +1,6 @@
 package com.rishi.frendzapp.ui.base;
 
+import android.app.ActionBar;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ public abstract class BaseFragment extends Fragment {
     protected BaseActivity baseActivity;
     protected BaseActivity.FailAction failAction;
     protected String title;
+    protected ActionBar actionBar;
 
     public String getTitle() {
         return title;
@@ -32,6 +34,7 @@ public abstract class BaseFragment extends Fragment {
         if (getArguments() != null) {
             title = getArguments().getString(ARG_TITLE);
         }
+
     }
 
     @Override

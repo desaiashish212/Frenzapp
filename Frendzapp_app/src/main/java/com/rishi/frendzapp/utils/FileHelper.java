@@ -37,6 +37,15 @@ public class FileHelper {
         }
     }
 
+    public boolean checkExsistFile(String fileUrlString) {
+        File file = new File(filesFolder, fileUrlString);
+        if (!file.exists()) {
+            return false;
+        }
+        else return true;
+    }
+
+
     public File createFileIfNotExist(String fileUrlString) {
         String fileName = fileUrlString.substring(fileUrlString.lastIndexOf('/') + 1) + fileType;
         return new File(filesFolder, fileName);

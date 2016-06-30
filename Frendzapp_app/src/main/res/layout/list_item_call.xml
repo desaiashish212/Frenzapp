@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/list_item_background_selector"
     android:orientation="horizontal"
-    android:padding="10dp">
+   >
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     app:border_color="@color/dark_gray"
-                    app:border_width="@dimen/avatar_border_width"
+
                     app:oval="true" />
                 <ImageView
                     android:id="@+id/online_imageview"
@@ -69,5 +69,6 @@
                 android:textSize="@dimen/text_size_small"/>
         </LinearLayout>
     </LinearLayout>
-    <include android:id="@+id/actions_friend_linearlayout" layout="@layout/view_friends_actions" />
+    <include
+        android:id="@+id/actions_friend_linearlayout" layout="@layout/view_friends_actions" />
 </RelativeLayout>
